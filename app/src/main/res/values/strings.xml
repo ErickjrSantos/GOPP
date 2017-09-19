@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">EstoqueScan</string>
+    <string name="scan">Ler outro código de barras</string>
+
+    <string name="estoqueLabel">Estoque</string>
+    <string name="precoLabel">Preço</string>
+    <string name="validadeLabel">Validade</string>
+    <string name="pedidoLabel">Pedido</string>
+    <string name="descricaoLabel">Descrição</string>
+
+    <string name="editValidade">Atualizar a validade</string>
+</resources>

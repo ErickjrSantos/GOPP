@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="distanceFromTop">100sp</dimen>
+    <dimen name="distanceFromLabel">5sp</dimen>
+    <dimen name="distanceBetweenItems">20sp</dimen>
+
+    <dimen name="heightBtn">55sp</dimen>
+</resources>

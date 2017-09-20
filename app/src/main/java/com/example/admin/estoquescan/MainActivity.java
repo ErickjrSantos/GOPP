@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null) {
-            String scanContent = scanningResult.getContents();
+            String scanBar = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
         } else {
             Toast toast = Toast.makeText(getApplicationContext(),

@@ -16,7 +16,7 @@ import java.net.URL;
 
 public class Connection extends AsyncTask {
 
-    String url = "http://187.35.128.157:70/StoqueScan/Scan.php";
+    String url = "http://187.35.128.157:70/EstoqueScan/estoqueQuery.php";
 
     @Override
     protected Object doInBackground(Object[] objects) {
@@ -29,7 +29,7 @@ public class Connection extends AsyncTask {
             con.setRequestMethod("POST");
 
             //dados POST
-            String urlParameters = "user=" + objects[0] + "&password=" + objects[1];
+            String urlParameters = "codb=" + objects[0] + "&codempresa=" + objects[1];
 
             //Cria POST
             con.setDoOutput(true);
@@ -54,9 +54,10 @@ public class Connection extends AsyncTask {
                 try{
 
                     JSONObject jsonObjt = new JSONObject(JsonStr);
-                    String id = jsonObjt.getString("codigoP");
-                    String nome = jsonObjt.getString("nomeP");
-                    String resposta = jsonObjt.getString("resposta");
+                    String id = jsonObjt.getString("codigoBarra");
+                    String nome = jsonObjt.getString("codigoInterno");
+                    String resposta = jsonObjt.getString("descricao");
+                    int estoque = jsonObjt.getInt("estoque");
 
                 }catch (Exception e){
                     e.printStackTrace();

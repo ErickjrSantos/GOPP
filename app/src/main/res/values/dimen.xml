@@ -5,4 +5,7 @@
     <dimen name="distanceBetweenItems">20sp</dimen>
 
     <dimen name="heightBtn">55sp</dimen>
+
+    <dimen name="labelTextSize">14sp</dimen>
+    <dimen name="txtTextSize">20sp</dimen>
 </resources>

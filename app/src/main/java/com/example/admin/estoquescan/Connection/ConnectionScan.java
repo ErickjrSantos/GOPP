@@ -1,6 +1,8 @@
-package com.example.admin.estoquescan;
+package com.example.admin.estoquescan.Connection;
 
 import android.os.AsyncTask;
+
+import com.example.admin.estoquescan.Classes.Produto;
 
 import org.json.JSONObject;
 
@@ -14,12 +16,13 @@ import java.net.URL;
  * Created by user on 19/09/17.
  */
 
-public class Connection extends AsyncTask {
+public class ConnectionScan extends AsyncTask {
 
     String url = "http://187.35.128.157:70/EstoqueScan/estoqueQuery.php";
+    Produto p;
 
     @Override
-    protected Object doInBackground(Object[] objects) {
+    protected Produto doInBackground(Object[] objects) {
 
         StringBuffer response = new StringBuffer();
         try {
@@ -29,7 +32,7 @@ public class Connection extends AsyncTask {
             con.setRequestMethod("POST");
 
             //dados POST
-            String urlParameters = "codb=" + objects[0] + "&codempresa=" + objects[1];
+            String urlParameters = "codb=" + objects[0] + "&codEmpresa=" + objects[1];
 
             //Cria POST
             con.setDoOutput(true);
@@ -54,10 +57,14 @@ public class Connection extends AsyncTask {
                 try{
 
                     JSONObject jsonObjt = new JSONObject(JsonStr);
-                    String id = jsonObjt.getString("codigoBarra");
-                    String nome = jsonObjt.getString("codigoInterno");
-                    String resposta = jsonObjt.getString("descricao");
+                    String codb = jsonObjt.getString("codigoBarra");
+                    String codi = jsonObjt.getString("codigoInterno");
+                    String desc = jsonObjt.getString("descricao");
                     int estoque = jsonObjt.getInt("estoque");
+                    String preco = jsonObjt.getString("preco");
+                    boolean promocao = jsonObjt.getBoolean("promocao");
+
+                    p = new Produto(codb, codi, desc, estoque, preco, promocao);
 
                 }catch (Exception e){
                     e.printStackTrace();
@@ -67,9 +74,9 @@ public class Connection extends AsyncTask {
 
         } catch (Exception e) {
             e.printStackTrace();
-
+            return null;
         }
 
-        return null;
+        return p;
     }
 }

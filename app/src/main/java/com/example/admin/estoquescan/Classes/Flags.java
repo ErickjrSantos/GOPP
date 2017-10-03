@@ -1,8 +1,4 @@
-package com.example.admin.estoquescan;
-
-/**
- * Created by Admin on 15/09/2017.
- */
+package com.example.admin.estoquescan.Classes;
 
 public class Flags {
     private boolean firstScan;

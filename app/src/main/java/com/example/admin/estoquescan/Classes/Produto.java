@@ -1,16 +1,26 @@
-package com.example.admin.estoquescan;
+package com.example.admin.estoquescan.Classes;
 
 public class Produto {
-    private String codigoBarra, codigoInterno, descricao;
+    private String codigoBarra, codigoInterno, descricao, preco;
     private int estoque;
-    private double preco;
 
-    public Produto(String codigoBarra, String codigoInterno, String descricao, int estoque, double preco){
+    public boolean isPromocao() {
+        return promocao;
+    }
+
+    public void setPromocao(boolean promocao) {
+        this.promocao = promocao;
+    }
+
+    private boolean promocao;
+
+    public Produto(String codigoBarra, String codigoInterno, String descricao, int estoque, String preco, boolean promocao){
         setCodigoBarra(codigoBarra);
         setCodigoInterno(codigoInterno);
         setDescricao(descricao);
         setEstoque(estoque);
         setPreco(preco);
+        setPromocao(promocao);
     }
 
     public String getCodigoBarra() {
@@ -45,11 +55,11 @@ public class Produto {
         this.estoque = estoque;
     }
 
-    public double getPreco() {
+    public String getPreco() {
         return preco;
     }
 
-    private void setPreco(double preco) {
+    private void setPreco(String preco) {
         this.preco = preco;
     }
 }

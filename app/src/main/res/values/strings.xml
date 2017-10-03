@@ -6,7 +6,10 @@
     <string name="precoLabel">Preço</string>
     <string name="validadeLabel">Validade</string>
     <string name="pedidoLabel">Pedido</string>
-    <string name="descricaoLabel">Descrição</string>
+    <string name="estoqueTextDefault">0</string>
+    <string name="precoTextDefault">R$ 0,00</string>
+    <string name="validadeTextDefault">Sem validade cadastrada</string>
+    <string name="pedidoTextDefault">Sem Pedidos</string>
 
     <string name="editValidade">Atualizar a validade</string>
 </resources>

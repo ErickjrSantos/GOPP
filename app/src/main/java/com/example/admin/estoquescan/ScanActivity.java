@@ -2,6 +2,7 @@ package com.example.admin.estoquescan;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -22,6 +23,7 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
     TextView txtPreco, txtEstoque;
     private Flags flags = Flags.getInstance();
     int unidade = 1;
+    private String titulo, subtitulo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,15 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSupportActionBar().setTitle(titulo);
+        getSupportActionBar().setSubtitle(subtitulo);
+    }
+
+
+
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
@@ -57,8 +68,10 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
                 String preco = "R$ " + p.getPreco().replace('.',',');
                 txtPreco.setText(preco);
                 txtEstoque.setText(String.valueOf(p.getEstoque()));
-                getSupportActionBar().setTitle(p.getDescricao());
-                getSupportActionBar().setSubtitle("PLU " + p.getCodigoInterno());
+                //getSupportActionBar().setTitle(p.getDescricao());
+                titulo = p.getDescricao();
+//                getSupportActionBar().setSubtitle("PLU " + p.getCodigoInterno());
+                subtitulo = "PLU " + p.getCodigoInterno();
                 if(p.isPromocao()){
                     txtPreco.setTextColor(getResources().getColor(R.color.precoPromocional));
                 }else{

@@ -8,4 +8,7 @@
 
     <dimen name="labelTextSize">14sp</dimen>
     <dimen name="txtTextSize">20sp</dimen>
+
+    <dimen name="imageWidth">150sp</dimen>
+    <dimen name="imageHeight">150sp</dimen>
 </resources>

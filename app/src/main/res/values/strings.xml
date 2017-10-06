@@ -1,21 +1,43 @@
 <resources>
-    <string name="app_name">EstoqueScan</string>
-    <string name="scan">Ler outro código de barras</string>
+    <string name="app_name">GOPP</string>
 
-    <string name="estoqueLabel">Estoque</string>
-    <string name="precoLabel">Preço</string>
-    <string name="validadeLabel">Validade</string>
-    <string name="pedidoLabel">Pedido</string>
-    <string name="estoqueTextDefault">0</string>
-    <string name="precoTextDefault">R$ 0,00</string>
-    <string name="validadeTextDefault">Sem validade cadastrada</string>
-    <string name="pedidoTextDefault">Sem Pedidos</string>
+    <!--            LoginActivity           -->
+    <string name="descriptorLogo">Logo</string>
 
-    <string name="editValidade">Atualizar a validade</string>
+    <string name="hintTextUsername">Nome de Usuário</string>
+    <string name="hintTextPassword">Senha</string>
+    <string name="checkBoxRememberMe">Lembrar-me</string>
+    <string name="buttonLogin">Entrar</string>
+    <!--            LoginActivity            -->
+
+    <!--////////////////////////////////////-->
+
+    <!--            MainActivity            -->
     <string name="title_activity_main">MainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="descriptorUserPhoto">Foto do Usuário</string>
+    <string name="scanLabel">Verificar Produto</string>
+    <string name="expirationManagerLabel">Gestão de Validade</string>
+    <string name="salesManagerLabel">Gestão de Ofertas</string>
+
+    <string name="action_logout">Sair</string>
+    <!--            MainActivity            -->
+
+    <!--////////////////////////////////////-->
+
+    <!--            ScanActivity            -->
+    <string name="estoqueLabel">Estoque</string>
+    <string name="priceLabel">Preço</string>
+    <string name="validadeLabel">Validade</string>
+    <string name="pedidoLabel">Pedido</string>
+    <string name="estoqueTextDefault">0</string>
+    <string name="priceTextDefault">R$ 0,00</string>
+    <string name="validadeTextDefault">Sem validade cadastrada</string>
+    <string name="pedidoTextDefault">Sem Pedidos</string>
+    <string name="scanAgain">Ler outro código de barras</string>
+    <string name="editValidade">Atualizar a validade</string>
+    <!--            ScanActivity            -->
 </resources>

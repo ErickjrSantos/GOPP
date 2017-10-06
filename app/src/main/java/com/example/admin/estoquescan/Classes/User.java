@@ -1,23 +1,49 @@
 package com.example.admin.estoquescan.Classes;
 
-/**
- * Created by Admin on 03/10/2017.
- */
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.util.Base64;
+
 
 public class User {
-    String user;
-    int codigo;
-    String resposta;
+    private String username, image;
+    private int id;
+    private static User savedUser = null;
 
-    public String getUser() {return user;}
+    public static User getSavedUser(){
+        if(savedUser == null)
+            savedUser = new User();
+        return savedUser;
+    }
 
-    public void setUser(String user) {this.user = user;}
+    public static void setSavedUser(User user){
+        savedUser = user;
+    }
 
-    public String getResposta() {return resposta;}
+    public Drawable getImage(Context context) {
+        return decode(image, context);
+    }
 
-    public void setResposta(String resposta) {this.resposta = resposta;}
+    public String getImageString(){ return image; }
 
-    public int getCodigo() {return codigo;}
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-    public void setCodigo(int codigo) {this.codigo = codigo;}
+    private static Drawable decode(String code, Context context){
+        byte[] decodeString = Base64.decode(code,Base64.DEFAULT);
+        Bitmap decodeByte = BitmapFactory.decodeByteArray(decodeString,0,decodeString.length);
+        return new BitmapDrawable(context.getResources(), decodeByte);
+    }
+
+    public String getUsername() {return username;}
+
+    public void setUsername(String user) {this.username = user;}
+
+    public int getId() {return id;}
+
+    public void setId(int id) {this.id = id;}
 }

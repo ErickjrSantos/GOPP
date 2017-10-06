@@ -1,21 +1,18 @@
 package com.example.admin.estoquescan;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.admin.estoquescan.Classes.Flags;
 import com.example.admin.estoquescan.Classes.Produto;
 import com.example.admin.estoquescan.Connection.ConnectionScan;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-
-import java.util.concurrent.ExecutionException;
 
 public class ScanActivity extends AppCompatActivity implements OnClickListener {
 
@@ -48,10 +45,18 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
     }
 
     @Override
+    public void onBackPressed() {
+        finish();
+        flags.setFirstScan(true);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-        getSupportActionBar().setTitle(titulo);
-        getSupportActionBar().setSubtitle(subtitulo);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(titulo);
+            getSupportActionBar().setSubtitle(subtitulo);
+        }
     }
 
 
@@ -59,32 +64,35 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
-        //TextView txtPreco = (TextView) findViewById(R.id.text);
-        if (scanningResult != null) {
+        assert scanningResult != null;
+        if (scanningResult.getContents() != null) {
             String scanBar = scanningResult.getContents();
             ConnectionScan con = new ConnectionScan();
             try {
-                Produto p = (Produto) con.execute(scanBar,unidade).get();
-                String preco = "R$ " + p.getPreco().replace('.',',');
-                txtPreco.setText(preco);
-                txtEstoque.setText(String.valueOf(p.getEstoque()));
-                //getSupportActionBar().setTitle(p.getDescricao());
-                titulo = p.getDescricao();
-//                getSupportActionBar().setSubtitle("PLU " + p.getCodigoInterno());
-                subtitulo = "PLU " + p.getCodigoInterno();
-                if(p.isPromocao()){
-                    txtPreco.setTextColor(getResources().getColor(R.color.precoPromocional));
+                Produto p = con.execute(scanBar,unidade).get();
+                if(p != null) {
+                    String preco = "R$ " + p.getPreco().replace('.', ',');
+                    txtPreco.setText(preco);
+                    txtEstoque.setText(String.valueOf(p.getEstoque()));
+                    titulo = p.getDescricao();
+                    subtitulo = "PLU " + p.getCodigoInterno();
+                    if (p.isPromocao()) {
+                        txtPreco.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.precoPromocional));
+                    } else {
+                        txtPreco.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.precoNormal));
+                    }
                 }else{
-                    txtPreco.setTextColor(getResources().getColor(R.color.precoNormal));
+                    titulo = "Produto não encontrado!";
+                    subtitulo = "Tente pesquisar novamente.";
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
+            } catch (Exception ex){
+                ex.printStackTrace();
+                finish();
+                flags.setFirstScan(false);
             }
         } else {
-            Toast.makeText(getApplicationContext(),
-                    "No scan data received!", Toast.LENGTH_SHORT).show();
+            finish();
+            flags.setFirstScan(false);
         }
     }
 }

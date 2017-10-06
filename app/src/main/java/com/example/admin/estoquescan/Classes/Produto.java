@@ -8,7 +8,7 @@ public class Produto {
         return promocao;
     }
 
-    public void setPromocao(boolean promocao) {
+    private void setPromocao(boolean promocao) {
         this.promocao = promocao;
     }
 

@@ -1,11 +1,12 @@
 package com.example.admin.estoquescan;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,12 +14,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.admin.estoquescan.Classes.User;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
+import static java.lang.Math.floor;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String GOPP_PREFERENCES = "GOPPPreferences";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +51,16 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setTitle("GOPP");
+            getSupportActionBar().setSubtitle("Menu Principal");
+        }
     }
 
     @Override
@@ -65,12 +78,25 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
 
-//       Intent ii = getIntent();
-//        Bundle b = ii.getExtras();
-//
-//        String userName = (String) b.get("nome");
-//        TextView mTextMenu = (TextView) findViewById(R.id.txtNome);
-//        mTextMenu.setText(userName);
+        User user = User.getSavedUser();
+
+        TextView textUser = (TextView) findViewById(R.id.txtNome);
+        textUser.setText(user.getUsername());
+
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        String strDate = sdf.format(cal.getTime());
+        TextView textData = (TextView) findViewById(R.id.txtData);
+        textData.setText(strDate);
+
+        ImageView image = (ImageView) findViewById(R.id.imageView);
+        Drawable userPhoto = user.getImage(getApplicationContext());
+        if(!user.getImageString().equals("")) {
+            image.setImageDrawable(userPhoto);
+        }else{
+            image.setImageDrawable(getNoUserPicture());
+        }
+
         return true;
     }
 
@@ -82,8 +108,12 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_logout) {
+            getSharedPreferences(GOPP_PREFERENCES, 0).edit().clear().apply();
+
+            Intent goToLogin = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(goToLogin);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -91,11 +121,11 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_scan) {
             Intent goToScan = new Intent(this,ScanActivity.class);
             startActivity(goToScan);
         } else if (id == R.id.nav_gallery) {
@@ -113,5 +143,27 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public Drawable getNoUserPicture(){
+        Drawable photo = null;
+        double random = Math.random() * 3;
+        double y = floor(random);
+
+        int x = (int) y;
+
+        switch(x){
+            case 0:
+                photo = getDrawable(R.drawable.blanklaranja);
+                break;
+            case 1:
+                photo = getDrawable(R.drawable.blankverdeclaro);
+                break;
+            case 2:
+                photo = getDrawable(R.drawable.blankverdeoliva);
+                break;
+        }
+
+        return photo;
     }
 }

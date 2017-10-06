@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout
+    android:id="@+id/myFrameLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
@@ -10,7 +11,7 @@
         android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical|center_horizontal"
             android:orientation="vertical"
             android:padding="@dimen/txtTextSize">
@@ -36,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/distanceBetweenItems"
-                android:text="@string/precoLabel"
+                android:text="@string/priceLabel"
                 android:textSize="@dimen/labelTextSize"
                 android:textStyle="bold"
                 android:freezesText="true"/>
@@ -45,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/distanceFromLabel"
-                android:text="@string/precoTextDefault"
+                android:text="@string/priceTextDefault"
                 android:textSize="@dimen/txtTextSize"
                 android:freezesText="true"/>
 
@@ -98,7 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/heightBtn"
                 android:layout_marginBottom="166dp"
-                android:text="@string/scan"
+                android:text="@string/scanAgain"
                 android:freezesText="true"/>
         </LinearLayout>
     </ScrollView>

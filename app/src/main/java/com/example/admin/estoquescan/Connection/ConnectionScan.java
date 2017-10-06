@@ -12,21 +12,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by user on 19/09/17.
- */
 
-public class ConnectionScan extends AsyncTask {
-
-    String url = "http://187.35.128.157:70/EstoqueScan/estoqueQuery.php";
-    Produto p;
+public class ConnectionScan extends AsyncTask<Object, Void, Produto> {
 
     @Override
     protected Produto doInBackground(Object[] objects) {
 
-        StringBuffer response = new StringBuffer();
+        StringBuilder response = new StringBuilder();
+        Produto p;
         try {
-            URL obj = new URL(url);
+            URL obj = new URL("http://187.35.128.157:70/EstoqueScan/estoqueQuery.php");
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             //envia POST
             con.setRequestMethod("POST");
@@ -53,25 +48,22 @@ public class ConnectionScan extends AsyncTask {
             }
             in.close();
             String JsonStr = response.toString();
-            if(JsonStr != null || JsonStr != ""){
-                try{
+            try{
 
-                    JSONObject jsonObjt = new JSONObject(JsonStr);
-                    String codb = jsonObjt.getString("codigoBarra");
-                    String codi = jsonObjt.getString("codigoInterno");
-                    String desc = jsonObjt.getString("descricao");
-                    int estoque = jsonObjt.getInt("estoque");
-                    String preco = jsonObjt.getString("preco");
-                    boolean promocao = jsonObjt.getBoolean("promocao");
+                JSONObject jsonObjt = new JSONObject(JsonStr);
+                String codb = jsonObjt.getString("codigoBarra");
+                String codi = jsonObjt.getString("codigoInterno");
+                String desc = jsonObjt.getString("descricao");
+                int estoque = jsonObjt.getInt("estoque");
+                String preco = jsonObjt.getString("preco");
+                boolean promocao = jsonObjt.getBoolean("promocao");
 
-                    p = new Produto(codb, codi, desc, estoque, preco, promocao);
+                p = new Produto(codb, codi, desc, estoque, preco, promocao);
 
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+            }catch (Exception e){
+                e.printStackTrace();
+                return null;
             }
-
-
         } catch (Exception e) {
             e.printStackTrace();
             return null;

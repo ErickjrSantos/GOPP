@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.estoquescan.Classes.User;
@@ -30,22 +30,33 @@ public class LoginActivity extends AppCompatActivity {
 
         SharedPreferences settings = getSharedPreferences(GOPP_PREFERENCES, 0);
         codigo = settings.getInt("codigo", 0);
-        nome = settings.getString("nome","" );
+        nome = settings.getString("nome", "");
 
 
         if(codigo != 0 && !nome.equals("")){
             Intent goHome = new Intent(LoginActivity.this,MainActivity.class);
+
+            ConnectionLogin CL = new ConnectionLogin();
+            User user = null;
+            try {
+                user = CL.execute(codigo).get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+            User.setSavedUser(user);
+
             startActivity(goHome);
             finish();
         }
 
-
-
-        getSupportActionBar().setTitle("GOPP");
-        getSupportActionBar().setSubtitle("Login");
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("GOPP");
+            getSupportActionBar().setSubtitle("Login");
+        }
 
         mUserName  = (EditText) findViewById(R.id.txtUsername);
         mUserPassword  = (EditText) findViewById(R.id.txtPassword);
+        final CheckBox checkRemember = (CheckBox) findViewById(R.id.checkRemember);
 
         Button loginButton = (Button) findViewById(R.id.btnLogin);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -56,18 +67,19 @@ public class LoginActivity extends AppCompatActivity {
                 String nome = mUserName.getText().toString();
 
                 try {
-                    User user = (User) CL.execute(nome,password).get();
+                    User user = CL.execute(nome,password).get();
+                    User.setSavedUser(user);
 
                     if(user!= null){
-                        SharedPreferences settings = getSharedPreferences(GOPP_PREFERENCES, 0);
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.putString("nome", user.getUser());
-                        editor.putInt("codigo", user.getCodigo());
-                        editor.apply();
+                        if(checkRemember.isChecked()) {
+                            SharedPreferences settings = getSharedPreferences(GOPP_PREFERENCES, 0);
+                            SharedPreferences.Editor editor = settings.edit();
+                            editor.putString("nome", user.getUsername());
+                            editor.putInt("codigo", user.getId());
+                            editor.apply();
+                        }
 
                         Intent goHome = new Intent(LoginActivity.this,MainActivity.class);
-                        String userName = user.getUser();
-                        goHome.putExtra("nome", userName);
                         startActivity(goHome);
                         finish();
                     }else{

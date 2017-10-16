@@ -2,6 +2,10 @@ package com.example.admin.estoquescan.Classes;
 
 public class Produto {
     private String codigoBarra, codigoInterno, descricao, preco;
+    private String enderereco;
+    private String tipoEndereco;
+
+
     private int estoque;
 
     public boolean isPromocao() {
@@ -22,6 +26,15 @@ public class Produto {
         setPreco(preco);
         setPromocao(promocao);
     }
+
+
+    public String getTipoEndereco() {return tipoEndereco;}
+
+    public void setTipoEndereco(String tipoEndereco) {this.tipoEndereco = tipoEndereco;}
+
+    public String getEnderereco() {return enderereco;}
+
+    public void setEnderereco(String enderereco) {this.enderereco = enderereco;}
 
     public String getCodigoBarra() {
         return codigoBarra;

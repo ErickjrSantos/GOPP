@@ -69,7 +69,7 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
             String scanBar = scanningResult.getContents();
             ConnectionScan con = new ConnectionScan();
             try {
-                Produto p = con.execute(scanBar,unidade).get();
+                Produto p = (Produto) con.execute(scanBar,unidade).get();
                 if(p != null) {
                     String preco = "R$ " + p.getPreco().replace('.', ',');
                     txtPreco.setText(preco);

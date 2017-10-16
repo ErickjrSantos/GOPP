@@ -115,6 +115,11 @@ public class MainActivity extends AppCompatActivity
             startActivity(goToLogin);
             finish();
         }
+        if(id ==R.id.action_set_endereco){
+            Intent goToCadastro = new Intent(getApplicationContext(),CadastroEnderecoActivity.class);
+            startActivity(goToCadastro);
+            onPause();
+        }
 
         return super.onOptionsItemSelected(item);
     }

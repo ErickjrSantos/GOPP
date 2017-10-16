@@ -24,6 +24,7 @@
     <string name="salesManagerLabel">Gestão de Ofertas</string>
 
     <string name="action_logout">Sair</string>
+    <string name="action_endereco">Cadastro endereços</string>
     <!--            MainActivity            -->
 
     <!--////////////////////////////////////-->

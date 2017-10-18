@@ -1,24 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.admin.estoquescan.CadastroEnderecoActivity">
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gostaria de cadastrar endereço da loja ou estoque?"
+        android:textSize="20dp"/>
 
     <CheckBox
         android:id="@+id/lojaBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Loja"
-        android:layout_marginLeft="5dp" />
+         />
 
     <CheckBox
         android:id="@+id/estoqueBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="605dp"
-        android:text="Estoque" />
+        android:text="Estoque"
+         />
+        <TextView
+            android:text="Qual o corredor? "
+            android:textSize="18dp"
+            />
+        <EditText
+            android:id="@+id/txtnomeCorredor"/>
+        <TextView
+            android:text="Qual a Prateleira? "
+            android:textSize="18dp"
+            android:layout_marginTop="20dp"
+            />
+        <EditText
+            android:id="@+id/txtnomePrateleira"/>
+        <Button
+            android:id="@+id/botaoEnvia"
+            android:text="enviar"/>
+    </TableLayout>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

@@ -9,14 +9,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class CadastroEnderecoActivity extends AppCompatActivity {
+public class AddressRegisterActivity extends AppCompatActivity {
     EditText txtCorredor;
     EditText txtPrateleira;
     int tipoDoEndereco = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro_endereco);
+        setContentView(R.layout.activity_address_register);
         txtCorredor = (EditText) findViewById(R.id.txtnomeCorredor);
         txtPrateleira = (EditText) findViewById(R.id.txtnomePrateleira);
         final CheckBox checkLoja = (CheckBox) findViewById(R.id.lojaBox);
@@ -40,7 +40,7 @@ public class CadastroEnderecoActivity extends AppCompatActivity {
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-                Toast.makeText(CadastroEnderecoActivity.this, "Salvo com Sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddressRegisterActivity.this, "Salvo com Sucesso!", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

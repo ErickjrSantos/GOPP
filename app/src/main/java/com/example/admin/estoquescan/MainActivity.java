@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity
             finish();
         }
         if(id ==R.id.action_set_endereco){
-            Intent goToCadastro = new Intent(getApplicationContext(),CadastroEnderecoActivity.class);
+            Intent goToCadastro = new Intent(getApplicationContext(),AddressRegisterActivity.class);
             startActivity(goToCadastro);
             onPause();
         }
@@ -159,13 +159,13 @@ public class MainActivity extends AppCompatActivity
 
         switch(x){
             case 0:
-                photo = getDrawable(R.drawable.blanklaranja);
+                photo = getDrawable(R.drawable.blankorange);
                 break;
             case 1:
-                photo = getDrawable(R.drawable.blankverdeclaro);
+                photo = getDrawable(R.drawable.blanklightgreen);
                 break;
             case 2:
-                photo = getDrawable(R.drawable.blankverdeoliva);
+                photo = getDrawable(R.drawable.blankolivegreen);
                 break;
         }
 

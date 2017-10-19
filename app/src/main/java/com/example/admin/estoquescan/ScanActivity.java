@@ -69,14 +69,14 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
             String scanBar = scanningResult.getContents();
             ConnectionScan con = new ConnectionScan();
             try {
-                Product p = (Product) con.execute(scanBar,unidade).get();
+                Product p = con.execute(scanBar, unidade).get();
                 if(p != null) {
                     String preco = "R$ " + p.getPrice().replace('.', ',');
                     txtPreco.setText(preco);
                     txtEstoque.setText(String.valueOf(p.getStock()));
                     titulo = p.getDescription();
                     subtitulo = "PLU " + p.getInternalCode();
-                    if (p.isPromocao()) {
+                    if (p.isInSale()) {
                         txtPreco.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.precoPromocional));
                     } else {
                         txtPreco.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.precoNormal));

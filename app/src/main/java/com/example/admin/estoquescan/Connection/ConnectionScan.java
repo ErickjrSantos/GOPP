@@ -13,7 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-public class ConnectionScan extends AsyncTask {
+public class ConnectionScan extends AsyncTask <Object, Void, Product> {
 
     @Override
     protected Product doInBackground(Object[] objects) {

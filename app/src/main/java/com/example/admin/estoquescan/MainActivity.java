@@ -133,8 +133,9 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_scan) {
             Intent goToScan = new Intent(this,ScanActivity.class);
             startActivity(goToScan);
-        } else if (id == R.id.nav_gallery) {
-
+        } else if (id == R.id.expiration_management) {
+            Intent goToExpiration = new Intent(this,ExpirationActivity.class);
+            startActivity(goToExpiration);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

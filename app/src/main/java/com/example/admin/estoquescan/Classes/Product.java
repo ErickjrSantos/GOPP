@@ -2,31 +2,18 @@ package com.example.admin.estoquescan.Classes;
 
 public class Product {
     private String barCode, internalCode, description, price;
-    private String address;
-    private String addressType;
-
-
+    private boolean sale;
+    private String address, addressType;
     private int stock;
 
-    public boolean isPromocao() {
-        return promocao;
-    }
-
-    private void setPromocao(boolean promocao) {
-        this.promocao = promocao;
-    }
-
-    private boolean promocao;
-
-    public Product(String barCode, String internalCode, String description, int stock, String price, boolean promocao){
+    public Product(String barCode, String internalCode, String description, int stock, String price, boolean sale){
         setBarCode(barCode);
         setInternalCode(internalCode);
         setDescription(description);
         setStock(stock);
         setPrice(price);
-        setPromocao(promocao);
+        setInSale(sale);
     }
-
 
     public String getAddressType() {return addressType;}
 
@@ -58,6 +45,14 @@ public class Product {
 
     private void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isInSale() {
+        return sale;
+    }
+
+    private void setInSale(boolean sale) {
+        this.sale = sale;
     }
 
     public int getStock() {

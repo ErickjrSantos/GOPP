@@ -10,18 +10,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class CadastroEnderecoActivity extends AppCompatActivity {
-    EditText txtCorredor;
-    EditText txtPrateleira;
-    int tipoDoEndereco = 0;
+    private EditText txtCorredor;
+    private EditText txtPrateleira;
+    private EditText txtAndarPrateleira;
+    private int tipoDoEndereco = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_endereco);
         txtCorredor = (EditText) findViewById(R.id.txtnomeCorredor);
         txtPrateleira = (EditText) findViewById(R.id.txtnomePrateleira);
+        txtAndarPrateleira = (EditText) findViewById(R.id.txtAndarPrateleira);
         final CheckBox checkLoja = (CheckBox) findViewById(R.id.lojaBox);
         final CheckBox checkEstoque = (CheckBox) findViewById(R.id.estoqueBox);
         checkEstoque.setChecked(true);
+
         Button btbCadastro = (Button) findViewById(R.id.botaoEnvia);
         btbCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,6 +33,7 @@ public class CadastroEnderecoActivity extends AppCompatActivity {
                 try {
                     String nomeCorredor = txtCorredor.getText().toString();
                     String nomePrateleira = txtPrateleira.getText().toString();
+                    String numeroPrateleira = txtAndarPrateleira.getText().toString();
                     if(checkLoja.isChecked()) {
                         tipoDoEndereco = 1;
                     }

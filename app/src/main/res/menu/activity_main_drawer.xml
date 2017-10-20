@@ -19,6 +19,11 @@
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/scanLabel"
             android:visible="false"/>
+        <item
+            android:id="@+id/action_set_endereco"
+            android:icon="@drawable/ic_action_endereco"
+            android:title="@string/action_endereco"
+            />
     </group>
 
     <item android:title="@string/scanLabel"

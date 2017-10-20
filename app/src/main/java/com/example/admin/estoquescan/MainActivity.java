@@ -115,11 +115,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(goToLogin);
             finish();
         }
-        if(id ==R.id.action_set_endereco){
-            Intent goToCadastro = new Intent(getApplicationContext(),AddressRegisterActivity.class);
-            startActivity(goToCadastro);
-            onPause();
-        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -142,7 +138,10 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.action_set_endereco) {
+            Intent goToCadastro = new Intent(getApplicationContext(),AddressRegisterActivity.class);
+            startActivity(goToCadastro);
+            onPause();
 
         }
 

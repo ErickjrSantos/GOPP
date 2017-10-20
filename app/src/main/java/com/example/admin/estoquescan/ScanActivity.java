@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.admin.estoquescan.Classes.Flags;
-import com.example.admin.estoquescan.Classes.Produto;
+import com.example.admin.estoquescan.Classes.Product;
 import com.example.admin.estoquescan.Connection.ConnectionScan;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -69,14 +69,14 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
             String scanBar = scanningResult.getContents();
             ConnectionScan con = new ConnectionScan();
             try {
-                Produto p = (Produto) con.execute(scanBar,unidade).get();
+                Product p = con.execute(scanBar, unidade).get();
                 if(p != null) {
-                    String preco = "R$ " + p.getPreco().replace('.', ',');
+                    String preco = "R$ " + p.getPrice().replace('.', ',');
                     txtPreco.setText(preco);
-                    txtEstoque.setText(String.valueOf(p.getEstoque()));
-                    titulo = p.getDescricao();
-                    subtitulo = "PLU " + p.getCodigoInterno();
-                    if (p.isPromocao()) {
+                    txtEstoque.setText(String.valueOf(p.getStock()));
+                    titulo = p.getDescription();
+                    subtitulo = "PLU " + p.getInternalCode();
+                    if (p.isInSale()) {
                         txtPreco.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.precoPromocional));
                     } else {
                         txtPreco.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.precoNormal));
@@ -88,11 +88,11 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
             } catch (Exception ex){
                 ex.printStackTrace();
                 finish();
-                flags.setFirstScan(false);
+                flags.setFirstScan(true);
             }
         } else {
             finish();
-            flags.setFirstScan(false);
+            flags.setFirstScan(true);
         }
     }
 }

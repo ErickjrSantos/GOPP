@@ -2,7 +2,7 @@ package com.example.admin.estoquescan.Connection;
 
 import android.os.AsyncTask;
 
-import com.example.admin.estoquescan.Classes.Produto;
+import com.example.admin.estoquescan.Classes.Product;
 
 import org.json.JSONObject;
 
@@ -13,13 +13,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-public class ConnectionScan extends AsyncTask {
+public class ConnectionScan extends AsyncTask <Object, Void, Product> {
 
     @Override
-    protected Produto doInBackground(Object[] objects) {
+    protected Product doInBackground(Object[] objects) {
 
         StringBuilder response = new StringBuilder();
-        Produto p;
+        Product p;
         try {
             URL obj = new URL("http://187.35.128.157:70/EstoqueScan/estoqueQuery.php");
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -58,7 +58,7 @@ public class ConnectionScan extends AsyncTask {
                 String preco = jsonObjt.getString("preco");
                 boolean promocao = jsonObjt.getBoolean("promocao");
 
-                p = new Produto(codb, codi, desc, estoque, preco, promocao);
+                p = new Product(codb, codi, desc, estoque, preco, promocao);
 
             }catch (Exception e){
                 e.printStackTrace();

@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity
             Intent goToScan = new Intent(this,ScanActivity.class);
             startActivity(goToScan);
         } else if (id == R.id.expiration_management) {
-            Intent goToExpiration = new Intent(this,ExpirationActivity.class);
+            Intent goToExpiration = new Intent(getApplicationContext(), SearchAddressActivity.class);
             startActivity(goToExpiration);
         } else if (id == R.id.nav_slideshow) {
 

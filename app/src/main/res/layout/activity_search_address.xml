@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.admin.estoquescan.SearchAddressActivity">
+
+
+    <TextView
+        android:id="@+id/txtcheckBoxSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="E Loja ou Estoque?"
+        />
+
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loja"/>
+
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Estoque"/>
+
+
+
+    <TextView
+        android:id="@+id/txtEstoqueSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nome do Estoque?"
+         />
+
+    <Spinner
+        android:id="@+id/spinnerEstoqueSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/txtCorredorSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nome do Corredor?"
+        />
+
+    <Spinner
+        android:id="@+id/spinnerCorredorSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <TextView
+        android:id="@+id/txtPrateleiraSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nome da Prateleira?"
+        />
+
+    <Spinner
+        android:id="@+id/spinnerPrateleiraSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <TextView
+        android:id="@+id/txtNumeroPrateleiraSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Numero da Prateleira?"
+        />
+
+    <Spinner
+        android:id="@+id/spinnerNumeroPrateleiraSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+
+    <Button
+        android:id="@+id/btnPesquisaSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pesquisar produtos"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Produto: "/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PLU: "/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Validade: "/>
+</LinearLayout>

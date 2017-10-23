@@ -30,6 +30,12 @@
         android:text="Estoque"
          />
         <TextView
+            android:text="Qual o nome do Estoque? "
+            android:textSize="18dp"
+            />
+        <EditText
+            android:id="@+id/txtnomeEstoque"/>
+        <TextView
             android:text="Qual o corredor? "
             android:textSize="18dp"
             />

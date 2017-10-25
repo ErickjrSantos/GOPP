@@ -1,6 +1,7 @@
 package com.example.admin.estoquescan;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,9 +15,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.admin.estoquescan.Classes.Corredor;
 import com.example.admin.estoquescan.Classes.Estoque;
 import com.example.admin.estoquescan.Connection.ConnectionCadastro;
 import com.example.admin.estoquescan.Connection.ConnectionSpinnerSearch;
+import com.example.admin.estoquescan.Connection.ConnectionSpinnerSearchCorredor;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,6 +47,8 @@ public class SearchAddressActivity extends AppCompatActivity implements AdapterV
 
         addSpinnerEstoque();
 
+
+
         Button BTNPesquisa = (Button) findViewById(R.id.btnPesquisaSearch);
         BTNPesquisa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,39 +65,48 @@ public class SearchAddressActivity extends AppCompatActivity implements AdapterV
 
     }
 
-    List<Estoque> ListEstoque;
 
     public void addSpinnerEstoque(){
         spnNomeEstoque = (Spinner) findViewById(R.id.spinnerEstoqueSearch);
-        spnNomeEstoque.setOnTouchListener(new View.OnTouchListener() {
+        ConnectionSpinnerSearch con = new ConnectionSpinnerSearch();
+        ArrayList<Estoque> estoque = null;
+             try {
+                 estoque = (ArrayList<Estoque>) con.execute().get();
+
+              } catch (Exception e) {
+              e.printStackTrace();
+            }
+
+        CustomAdapterSpinner adapter = new CustomAdapterSpinner(SearchAddressActivity.this, estoque);
+        spnNomeEstoque.setAdapter(adapter);
+
+        spnNomeEstoque.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    ConnectionSpinnerSearch con = new ConnectionSpinnerSearch();
-                    ArrayList<Estoque> estoque = null;
-                    try {
-                        estoque = (ArrayList<Estoque>) con.execute().get();
-                        ListEstoque = new ArrayList<Estoque>();
-                        for(int i=0; i < estoque.size();i++){
-                            Estoque est = new Estoque( estoque.get(i).getId_estoque(),estoque.get(i).getNome_estoque() );
-                            ListEstoque.add(est);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                addSpinnerCorredor();
+            }
 
-                    CustomAdapterSpinner adapter = new CustomAdapterSpinner(SearchAddressActivity.this, R.layout.new_layout_spnner_01, ListEstoque);
-                    spnNomeEstoque.setAdapter(adapter);
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
-//                ArrayAdapter<Estoque> adapter = new ArrayAdapter<Estoque>(this, android.R.layout.simple_spinner_item, estoque);
-//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                spnNomeEstoque.setAdapter(adapter);
-                }
-                return true;
             }
         });
+    }
 
+    public void addSpinnerCorredor(){
+        spnCorredor = (Spinner) findViewById(R.id.spinnerCorredorSearch);
+        ConnectionSpinnerSearchCorredor conCo = new ConnectionSpinnerSearchCorredor();
+        ArrayList<Corredor> corredores = null;
 
+        int estoque = (int) spnNomeEstoque.getItemIdAtPosition(spnNomeEstoque.getSelectedItemPosition());
+        try {
+            corredores = (ArrayList<Corredor>) conCo.execute(estoque).get();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        CustomAdapterSpinnerCorredores adapterCor = new CustomAdapterSpinnerCorredores(SearchAddressActivity.this,corredores);
+        spnCorredor.setAdapter(adapterCor);
     }
 
     @Override
@@ -120,6 +134,7 @@ public class SearchAddressActivity extends AppCompatActivity implements AdapterV
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
         adapterView.getSelectedItem();
     }
 

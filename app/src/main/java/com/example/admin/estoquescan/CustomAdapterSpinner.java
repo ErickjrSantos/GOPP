@@ -1,68 +1,52 @@
 package com.example.admin.estoquescan;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import com.example.admin.estoquescan.Classes.Estoque;
-
 import java.util.List;
+
 
 /**
  * Created by user on 24/10/17.
  */
 
-public class CustomAdapterSpinner extends ArrayAdapter<Estoque> {
-    LayoutInflater flater;
-    public CustomAdapterSpinner(Activity context, int resource, List<Estoque> list) {
-        super(context, resource, list );
-        flater = context.getLayoutInflater();
-    }
+public class CustomAdapterSpinner extends BaseAdapter {
 
-    @NonNull
-    @Override
-    public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
-        if(view == null){
-            view = flater.inflate(R.layout.new_layout_spnner_01,parent, false);
-        }
-        Estoque item = getItem(position);
+    private final List<Estoque> estoques;
+    private final Context context;
 
-        TextView txtNome = view.findViewById(R.id.layout_spinner);
-        txtNome.setText(item.getNome_estoque());
-
-//        TextView txtid = view.findViewById(R.id.layout_spinner_1);
-//        txtid.setText(String.valueOf(item.getId_estoque()));
-//
-//        TextView txtSigla = view.findViewById(R.id.layout_spinner_2);
-//        txtSigla.setText(item.getSigla());
-
-        return view;
+    public CustomAdapterSpinner(Context context, List<Estoque> estoques){
+        this.context = context;
+        this.estoques = estoques;
     }
 
     @Override
-    public View getDropDownView(int position, @Nullable View view, @NonNull ViewGroup parent) {
-        if(view == null){
-            view = flater.inflate(R.layout.new_layout_spnner_01,parent, false);
-        }
-        Estoque item = getItem(position);
-
-        TextView txtNome = view.findViewById(R.id.layout_spinner);
-        txtNome.setText(item.getNome_estoque());
-
-//        TextView txtid = view.findViewById(R.id.layout_spinner_1);
-//        txtid.setText(String.valueOf(item.getId_estoque()));
-//
-//        TextView txtSigla = view.findViewById(R.id.layout_spinner_2);
-//        txtSigla.setText(item.getSigla());
-        return view;
-
+    public int getCount() {
+        return estoques.size();
     }
+
+    @Override
+    public Object getItem(int i) {
+        return null;
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return estoques.get(i).getId_estoque();
+    }
+
+
+
+    @Override
+    public View getView(int position, View view, ViewGroup viewGroup) {
+        Estoque estoque = estoques.get(position);
+        TextView  viewEst = new TextView(context);
+        viewEst.setText(estoque.toString());
+        return viewEst;
+    }
+
 }
+

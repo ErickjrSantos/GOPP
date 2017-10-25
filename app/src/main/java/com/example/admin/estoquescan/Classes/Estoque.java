@@ -32,6 +32,6 @@ public class Estoque {
 
     @Override
     public String toString() {
-        return nome_estoque+"PLU:   "+id_estoque;
+        return getNome_estoque()+"\nPLU:   "+getId_estoque();
     }
 }

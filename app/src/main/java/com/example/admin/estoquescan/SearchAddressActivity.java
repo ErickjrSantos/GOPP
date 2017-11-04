@@ -74,8 +74,6 @@ public class SearchAddressActivity extends AppCompatActivity {
                 }
             }
         });
-
-
         addSpinnerEstoque();
         addSpinnerCorredor();
         addSpinnerPrateleira();

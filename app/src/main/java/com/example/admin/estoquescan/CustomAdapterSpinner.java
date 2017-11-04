@@ -23,8 +23,15 @@ public class CustomAdapterSpinner extends BaseAdapter {
         this.estoques = estoques;
     }
 
+    public void setEstoques(List<Estoque> estoques){
+        this.estoques.clear();
+        this.estoques.addAll(estoques);
+        notifyDataSetChanged(); //notificar que mudou a porra toda
+    }
+
     @Override
     public int getCount() {
+        if(estoques == null || estoques.isEmpty()) return 0;
         return estoques.size();
     }
 
@@ -38,13 +45,12 @@ public class CustomAdapterSpinner extends BaseAdapter {
         return estoques.get(i).getId_estoque();
     }
 
-
-
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
         Estoque estoque = estoques.get(position);
         TextView  viewEst = new TextView(context);
         viewEst.setText(estoque.toString());
+
         return viewEst;
     }
 

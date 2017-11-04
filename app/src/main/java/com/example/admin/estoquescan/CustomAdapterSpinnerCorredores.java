@@ -25,6 +25,11 @@ public class CustomAdapterSpinnerCorredores extends BaseAdapter {
 
     }
 
+    public void setCorredores(List<Corredor> corredores){
+        this.corredores.clear();
+        this.corredores.addAll(corredores);
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getCount() {

@@ -11,4 +11,5 @@
 
     <dimen name="imageWidth">150sp</dimen>
     <dimen name="imageHeight">150sp</dimen>
+    <dimen name="sizeText">17sp</dimen>
 </resources>

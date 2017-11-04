@@ -7,30 +7,41 @@
     android:orientation="vertical"
     tools:context="com.example.admin.estoquescan.SearchAddressActivity">
 
-
     <TextView
         android:id="@+id/txtcheckBoxSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/sizeText"
         android:text="E Loja ou Estoque?"
         />
 
-    <CheckBox
-        android:layout_width="match_parent"
+    <RadioGroup
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Loja"/>
+        android:orientation="horizontal"
 
-    <CheckBox
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Estoque"/>
+        >
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tipoLoja"
+            android:text="LOJA"
 
+            />
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tipoEstoque"
+            android:text="ESTOQUE"
+            />
 
+    </RadioGroup>
 
     <TextView
         android:id="@+id/txtEstoqueSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/sizeText"
         android:text="Nome do Estoque?"
          />
 
@@ -44,6 +55,7 @@
         android:id="@+id/txtCorredorSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/sizeText"
         android:text="Nome do Corredor?"
         />
 
@@ -56,6 +68,7 @@
         android:id="@+id/txtPrateleiraSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/sizeText"
         android:text="Nome da Prateleira?"
         />
 
@@ -68,6 +81,7 @@
         android:id="@+id/txtNumeroPrateleiraSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/sizeText"
         android:text="Numero da Prateleira?"
         />
 
@@ -88,13 +102,16 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/sizeText"
         android:text="Produto: "/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/sizeText"
         android:text="PLU: "/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/sizeText"
         android:text="Validade: "/>
 </LinearLayout>

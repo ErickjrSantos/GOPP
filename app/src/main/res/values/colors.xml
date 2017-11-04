@@ -6,4 +6,6 @@
 
     <color name="precoPromocional">#D0D00000</color>
     <color name="precoNormal">#000000</color>
+
+    <color name="colorSpinner">#1b74d9</color>
 </resources>

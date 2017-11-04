@@ -1,12 +1,9 @@
 package com.example.admin.estoquescan.Connection;
 
 import android.os.AsyncTask;
-
-import com.example.admin.estoquescan.Classes.Estoque;
-
+import com.example.admin.estoquescan.Classes.Prateleira;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
@@ -15,22 +12,29 @@ import java.net.URL;
 import java.util.ArrayList;
 
 /**
- * Created by user on 24/10/17.
+ * Created by user on 25/10/17.
  */
 
-public class ConnectionSpinnerSearch extends AsyncTask {
+public class ConnectionSpinnersearchPrateleira extends AsyncTask {
+
+    StringBuilder response = new StringBuilder();
     @Override
     protected Object doInBackground(Object[] objects) {
 
-        StringBuilder response = new StringBuilder();
-
         try {
-            URL obj = new URL("http://187.35.128.157:70/EstoqueScan/spinnerEstoque.php");
+            URL obj = new URL("http://187.35.128.157:70/EstoqueScan/spinnerPrateleira.php");
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            //envia POST
+            con.setRequestMethod("POST");
+
+            //dados POST
+            String urlParameters;
+            urlParameters = "idCorredor=" + objects[0];
 
             //Cria POST
             con.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
             wr.flush();
             wr.close();
 
@@ -48,30 +52,28 @@ public class ConnectionSpinnerSearch extends AsyncTask {
             String Jsonres = response.toString();
 
             JSONObject json = new JSONObject(Jsonres);
-            int quantidadEstoques = json.getInt("QuantEstoques");
-            JSONArray JEst = json.getJSONArray("EST");
+            int quantidadPrateleiras = json.getInt("quantPrateleira");
+            JSONArray JEst = json.getJSONArray("Prateleiras");
 
-            ArrayList<Estoque> estoqueArray = new ArrayList<>();
+            ArrayList<Prateleira> PrateleiraArray = new ArrayList<>();
 
-            for(int i = 0; i < quantidadEstoques; i++ ){
-                int idEstoque = JEst.getJSONObject(i).getInt("id_estoque");
-                String nomeEstoque = JEst.getJSONObject(i).getString("nome_estoque");
-                String sigla = JEst.getJSONObject(i).getString("sigla");
+            for (int i = 0; i < quantidadPrateleiras; i++) {
+                int id_prateleira = JEst.getJSONObject(i).getInt("id_prateleira");
+                String nome_prateleira = JEst.getJSONObject(i).getString("nome_prateleira");
 
-                Estoque estoq = new Estoque();
-                estoq.setId_estoque(idEstoque);
-                estoq.setNome_estoque(nomeEstoque);
-                estoq.setSigla(sigla);
+                Prateleira prateleira = new Prateleira();
+                prateleira.setId_prateleira(id_prateleira);
+                prateleira.setNome_prateleira(nome_prateleira);
 
-                estoqueArray.add(estoq);
+                PrateleiraArray.add(prateleira);
             }
 
-            return  estoqueArray;
+            return PrateleiraArray;
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-
 
     }
 }

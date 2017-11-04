@@ -15,10 +15,10 @@ import java.net.URL;
 import java.util.ArrayList;
 
 /**
- * Created by user on 24/10/17.
+ * Created by user on 03/11/17.
  */
 
-public class ConnectionSpinnerSearch extends AsyncTask {
+public class ConnectionEstoqueGeral extends AsyncTask {
     @Override
     protected Object doInBackground(Object[] objects) {
 
@@ -27,10 +27,17 @@ public class ConnectionSpinnerSearch extends AsyncTask {
         try {
             URL obj = new URL("http://187.35.128.157:70/EstoqueScan/spinnerEstoque.php");
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            //envia POST
+            con.setRequestMethod("POST");
+
+            //dados POST
+            String urlParameters;
+            urlParameters = "idEstoque=" + objects[0];
 
             //Cria POST
             con.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
             wr.flush();
             wr.close();
 
@@ -71,7 +78,6 @@ public class ConnectionSpinnerSearch extends AsyncTask {
             e.printStackTrace();
             return null;
         }
-
 
     }
 }

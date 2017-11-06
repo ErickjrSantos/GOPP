@@ -15,7 +15,7 @@ import java.util.List;
 
 public class CustomAdapterSpinner extends BaseAdapter {
 
-    private final List<Estoque> estoques;
+    private List<Estoque> estoques;
     private final Context context;
 
     public CustomAdapterSpinner(Context context, List<Estoque> estoques){
@@ -24,8 +24,8 @@ public class CustomAdapterSpinner extends BaseAdapter {
     }
 
     public void setEstoques(List<Estoque> estoques){
-        this.estoques.clear();
-        this.estoques.addAll(estoques);
+            //Clear removido
+        this.estoques = estoques;
         notifyDataSetChanged(); //notificar que mudou a porra toda
     }
 

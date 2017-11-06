@@ -109,6 +109,17 @@ public class SearchAddressActivity extends AppCompatActivity {
 
         ((CustomAdapterSpinnerCorredores)spnCorredor.getAdapter()).setCorredores(corredores);
     }
+    private void updatePrateleira()throws Exception{
+        ConnectionSpinnersearchPrateleira conPra = new ConnectionSpinnersearchPrateleira();
+        try {
+            int corredor = (int) spnCorredor.getItemAtPosition(spnCorredor.getSelectedItemPosition());
+            ArrayList<Prateleira> prateleiras = (ArrayList<Prateleira>) conPra.execute(corredor).get();
+
+        ((CustomAdapterSpinnerPrateleiras)spnPrateleira.getAdapter()).setPrateleiras(prateleiras);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public void addSpinnerEstoque(){
         CustomAdapterSpinner adapter = new CustomAdapterSpinner(SearchAddressActivity.this,null);
@@ -129,18 +140,19 @@ public class SearchAddressActivity extends AppCompatActivity {
         });
 
     }
-
     public void addSpinnerCorredor(){
-
 
         try {
             CustomAdapterSpinnerCorredores adapterCor = new CustomAdapterSpinnerCorredores(SearchAddressActivity.this, null);
-            spnCorredor.setDropDownHorizontalOffset(R.layout.new_layout_spnner_01);
             spnCorredor.setAdapter(adapterCor);
             spnCorredor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    //addSpinnerPrateleira();
+                    try {
+                        updatePrateleira();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
@@ -154,21 +166,13 @@ public class SearchAddressActivity extends AppCompatActivity {
     }
 
     public void addSpinnerPrateleira(){
-
-        ConnectionSpinnersearchPrateleira connPra = new ConnectionSpinnersearchPrateleira();
-        ArrayList<Prateleira> prateleiras;
-
-        int corredor = (int) spnCorredor.getItemIdAtPosition(spnCorredor.getSelectedItemPosition());
         try{
-            prateleiras = (ArrayList<Prateleira>) connPra.execute(corredor).get();
-
-            CustomAdapterSpinnerPrateleiras adpterPra = new CustomAdapterSpinnerPrateleiras(SearchAddressActivity.this, prateleiras);
-            spnPrateleira.setDropDownHorizontalOffset(R.layout.new_layout_spnner_01);
+            CustomAdapterSpinnerPrateleiras adpterPra = new CustomAdapterSpinnerPrateleiras(SearchAddressActivity.this,null);
             spnPrateleira.setAdapter(adpterPra);
             spnPrateleira.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                   //addSpinnerNumPrateleira();
+
                 }
 
                 @Override

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.admin.estoquescan.Classes.NumeroPrateleira;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,17 +17,22 @@ import java.util.List;
 
 public class CustomAdapterSpinnerNumPrateleiras extends BaseAdapter {
 
-    private final List<NumeroPrateleira> numPrateleiras;
+    private List<NumeroPrateleira> numPrateleiras;
     private final Context context;
 
     public CustomAdapterSpinnerNumPrateleiras(Context context, List<NumeroPrateleira> numPrateleiras){
        this.numPrateleiras = numPrateleiras;
        this.context = context;
    }
-
+    public void setNumeroPrateleiras(ArrayList<NumeroPrateleira> numeroPrateleiras){
+        this.numPrateleiras = numeroPrateleiras;
+        notifyDataSetChanged();
+    }
 
     @Override
-    public int getCount() {return numPrateleiras.size();}
+    public int getCount() {
+        if(numPrateleiras == null || numPrateleiras.isEmpty()) return 0;
+        return numPrateleiras.size();}
 
     @Override
     public Object getItem(int i) {return null;}

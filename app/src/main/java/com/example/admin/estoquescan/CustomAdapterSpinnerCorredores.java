@@ -16,7 +16,7 @@ import java.util.List;
 
 public class CustomAdapterSpinnerCorredores extends BaseAdapter {
 
-    private final List<Corredor> corredores;
+    private List<Corredor> corredores;
     private final Context context;
 
     public CustomAdapterSpinnerCorredores(Context context, List<Corredor> corredores){
@@ -26,13 +26,14 @@ public class CustomAdapterSpinnerCorredores extends BaseAdapter {
     }
 
     public void setCorredores(List<Corredor> corredores){
-        this.corredores.clear();
-        this.corredores.addAll(corredores);
+        //this.corredores.clear();
+        this.corredores = corredores;
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
+        if(corredores == null || corredores.isEmpty()) return 0;
         return corredores.size();
     }
 

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.admin.estoquescan.Classes.Prateleira;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class CustomAdapterSpinnerPrateleiras extends BaseAdapter {
 
-    private final List<Prateleira> prateleiras;
+    private List<Prateleira> prateleiras;
     private final Context context;
 
     public CustomAdapterSpinnerPrateleiras(Context context, List<Prateleira> prateleiras){
@@ -24,8 +25,14 @@ public class CustomAdapterSpinnerPrateleiras extends BaseAdapter {
         this.context = context;
     }
 
+    public void setPrateleiras(ArrayList<Prateleira> prateleiras){
+        this.prateleiras = prateleiras;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
+        if(prateleiras == null || prateleiras.isEmpty()) return 0;
         return prateleiras.size();
     }
 

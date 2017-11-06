@@ -28,7 +28,9 @@ public class CustomAdapterSpinnerCorredores extends BaseAdapter {
     public void setCorredores(List<Corredor> corredores){
         //this.corredores.clear();
         this.corredores = corredores;
-        notifyDataSetChanged();
+       notifyDataSetChanged();
+
+
     }
 
     @Override

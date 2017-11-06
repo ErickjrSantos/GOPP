@@ -23,7 +23,7 @@ public class ConnectionSpinnerNumeroPrateleira extends AsyncTask {
     protected Object doInBackground(Object[] objects) {
 
         try {
-            URL obj = new URL("http://187.35.128.157:70/EstoqueScan/spinnerNumeroPrateleira.php");
+            URL obj = new URL("http://187.35.128.157:70/EstoqueScan/spinnerNumeroPrateleiras.php");
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             //envia POST
             con.setRequestMethod("POST");

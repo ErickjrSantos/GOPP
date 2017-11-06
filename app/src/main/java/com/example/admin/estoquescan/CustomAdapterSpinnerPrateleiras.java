@@ -26,6 +26,7 @@ public class CustomAdapterSpinnerPrateleiras extends BaseAdapter {
     }
 
     public void setPrateleiras(ArrayList<Prateleira> prateleiras){
+        //this.prateleiras.clear();
         this.prateleiras = prateleiras;
         notifyDataSetChanged();
     }

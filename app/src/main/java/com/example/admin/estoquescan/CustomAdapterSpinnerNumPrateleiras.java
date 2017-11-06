@@ -25,6 +25,7 @@ public class CustomAdapterSpinnerNumPrateleiras extends BaseAdapter {
        this.context = context;
    }
     public void setNumeroPrateleiras(ArrayList<NumeroPrateleira> numeroPrateleiras){
+        //this.numPrateleiras.clear();
         this.numPrateleiras = numeroPrateleiras;
         notifyDataSetChanged();
     }

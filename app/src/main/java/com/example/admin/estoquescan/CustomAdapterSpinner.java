@@ -24,7 +24,7 @@ public class CustomAdapterSpinner extends BaseAdapter {
     }
 
     public void setEstoques(List<Estoque> estoques){
-            //Clear removido
+       // this.estoques.clear();
         this.estoques = estoques;
         notifyDataSetChanged(); //notificar que mudou a porra toda
     }

@@ -1,7 +1,10 @@
 package com.example.admin.estoquescan;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,17 +19,28 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.Fragmento.FragmentDialog;
 import com.example.admin.estoquescan.Classes.Corredor;
 import com.example.admin.estoquescan.Classes.Estoque;
+import com.example.admin.estoquescan.Classes.Flags;
 import com.example.admin.estoquescan.Classes.NumeroPrateleira;
 import com.example.admin.estoquescan.Classes.Prateleira;
+import com.example.admin.estoquescan.Classes.Product;
+import com.example.admin.estoquescan.Classes.Produto;
+import com.example.admin.estoquescan.Connection.ConnectionBuscaProduto;
+import com.example.admin.estoquescan.Connection.ConnectionBuscaProdutoMysql;
 import com.example.admin.estoquescan.Connection.ConnectionCadastro;
+import com.example.admin.estoquescan.Connection.ConnectionScan;
 import com.example.admin.estoquescan.Connection.ConnectionSpinnerNumeroPrateleira;
 import com.example.admin.estoquescan.Connection.ConnectionSpinnerSearch;
 import com.example.admin.estoquescan.Connection.ConnectionSpinnerSearchCorredor;
+import com.example.admin.estoquescan.Connection.ConnectionSpinnerSearchLoja;
 import com.example.admin.estoquescan.Connection.ConnectionSpinnersearchPrateleira;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,6 +58,13 @@ public class SearchAddressActivity extends AppCompatActivity {
     Spinner spnPrateleira;
     Spinner spnNumeroPrateleira;
 
+    TextView txtPreco;
+    TextView txtEstoque;
+    TextView txtTitulo;
+
+    private Flags flags = Flags.getInstance();
+    int unidade = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,15 +74,24 @@ public class SearchAddressActivity extends AppCompatActivity {
         final RadioButton tipoEstoque = (RadioButton) findViewById(R.id.tipoEstoque);
 
 
+
         spnNomeEstoque = (Spinner) findViewById(R.id.spinnerEstoqueSearch);
         spnCorredor = (Spinner) findViewById(R.id.spinnerCorredorSearch);
         spnPrateleira = (Spinner) findViewById(R.id.spinnerPrateleiraSearch);
         spnNumeroPrateleira = (Spinner) findViewById(R.id.spinnerNumeroPrateleiraSearch);
 
+        txtPreco  = (TextView) findViewById(R.id.precoProduto);
+        txtEstoque = (TextView) findViewById(R.id.codigoProduto);
+        txtTitulo = (TextView) findViewById(R.id.description);
+
         tipoLoja.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                try {
+                    updateLoja();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         tipoEstoque.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +109,7 @@ public class SearchAddressActivity extends AppCompatActivity {
         addSpinnerPrateleira();
         addSpinnerNumPrateleira();
 
-        Button BTNPesquisa = (Button) findViewById(R.id.btnPesquisaSearch);
+        Button BTNPesquisa = (Button) findViewById(R.id.btn_adciona_produto);
         BTNPesquisa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,13 +118,44 @@ public class SearchAddressActivity extends AppCompatActivity {
                 }else{
                     txtTipo = 2;
                 }
-                Toast.makeText(SearchAddressActivity.this, "Ainda nao configurado"+ txtTipo , Toast.LENGTH_SHORT).show();
+                if(flags.isFirstScan()) {
+                    IntentIntegrator scanIntegrator = new IntentIntegrator(SearchAddressActivity.this);
+                    scanIntegrator.initiateScan();
+                    flags.setFirstScan(false);
+                }
 
             }
         });
 
-    }
+        final String[] string = {"teste","teste2","teste3"};
 
+        Button BTNRetira = (Button) findViewById(R.id.btn_retira_produto);
+        BTNRetira.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(SearchAddressActivity.this);
+                builder.setMessage("OLHA EU AQUI ;)")
+                        .setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> adapterView) {
+
+                            }
+                        }).show();
+            }
+        });
+
+
+    }
+    private  void updateLoja()throws Exception{
+        ConnectionSpinnerSearchLoja conLoja = new ConnectionSpinnerSearchLoja();
+        ArrayList<Estoque> estoques = (ArrayList<Estoque>) conLoja.execute().get();
+        ((CustomAdapterSpinner)spnNomeEstoque.getAdapter()).setEstoques(estoques);
+    }
 
     private void updateEstoque() throws Exception{
         ConnectionSpinnerSearch con = new ConnectionSpinnerSearch();
@@ -126,6 +187,7 @@ public class SearchAddressActivity extends AppCompatActivity {
     public void addSpinnerEstoque(){
         CustomAdapterSpinner adapter = new CustomAdapterSpinner(SearchAddressActivity.this,null);
         spnNomeEstoque.setAdapter(adapter);
+        //spnNomeEstoque.setBackgroundResource(R.drawable.ic_spinner);
         spnNomeEstoque.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -137,6 +199,11 @@ public class SearchAddressActivity extends AppCompatActivity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+                try {
+                    updateCorredor();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -159,6 +226,11 @@ public class SearchAddressActivity extends AppCompatActivity {
 
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
+                    try {
+                        updatePrateleira();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                 }
             });
@@ -183,7 +255,11 @@ public class SearchAddressActivity extends AppCompatActivity {
 
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
-
+                    try {
+                        updateNumPrateleira();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                 }
             });
@@ -191,6 +267,7 @@ public class SearchAddressActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    Product prod = new Product();
     public void addSpinnerNumPrateleira(){
 
         try{
@@ -199,12 +276,29 @@ public class SearchAddressActivity extends AppCompatActivity {
         spnNumeroPrateleira.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                try {
+                    ConnectionBuscaProdutoMysql conMy = new ConnectionBuscaProdutoMysql();
+                    Produto produto = new Produto();
+                     produto = (Produto) conMy.execute(l).get();
+
+                       String cod = produto.getCodBarra();
+                        ConnectionBuscaProduto con = new ConnectionBuscaProduto();
+                        prod = (Product) con.execute(cod).get();
+                        String plu = prod.getInternalCode();
+                        String titulo = prod.getDescription();
+                        txtTitulo.setText(titulo + " PLU:  " + plu);
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    txtTitulo.setText("nao ha produtos");
+                }
 
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
+                    txtTitulo.setText("");
             }
         });
         }catch(Exception e){
@@ -230,11 +324,52 @@ public class SearchAddressActivity extends AppCompatActivity {
         int id = item.getItemId();
         if(id== R.id.item_estoque){
             Intent goToCadastro = new Intent(getApplicationContext(),AddressRegisterActivity.class);
+            int endereco = (int) spnNumeroPrateleira.getItemIdAtPosition(spnNumeroPrateleira.getSelectedItemPosition());
+            goToCadastro.putExtra("endereco",endereco);
             startActivity(goToCadastro);
-            finish();
         }
         return super.onOptionsItemSelected(item);
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+
+         String titulo;
+         String subtitulo;
+
+        assert scanningResult != null;
+        if (scanningResult.getContents() != null) {
+            String scanBar = scanningResult.getContents();
+            ConnectionScan con = new ConnectionScan();
+            try {
+                Product p = con.execute(scanBar, unidade).get();
+                if(p != null) {
+                    String preco = "R$ " + p.getPrice().replace('.', ',');
+                    txtPreco.setText(preco);
+                    txtEstoque.setText(String.valueOf(p.getStock()));
+                    titulo = p.getDescription();
+                    subtitulo = "\nPLU: " + p.getInternalCode();
+                    txtTitulo.setText("Descrição: "+titulo + subtitulo);
+                    if (p.isInSale()) {
+                        txtPreco.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.precoPromocional));
+                    } else {
+                        txtPreco.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.precoNormal));
+                    }
+                }else{
+                    titulo = "Produto não encontrado!";
+                    subtitulo = "Tente pesquisar novamente.";
+                    txtTitulo.setText(titulo);
+
+                }
+            } catch (Exception ex){
+                ex.printStackTrace();
+                finish();
+                flags.setFirstScan(true);
+            }
+        } else {
+            finish();
+            flags.setFirstScan(true);
+        }
+    }
 
 }

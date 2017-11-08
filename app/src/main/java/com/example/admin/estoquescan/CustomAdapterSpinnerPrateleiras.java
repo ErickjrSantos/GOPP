@@ -52,6 +52,7 @@ public class CustomAdapterSpinnerPrateleiras extends BaseAdapter {
         Prateleira prat = prateleiras.get(position);
         TextView ViewPra = new TextView(context);
         ViewPra.setText(prat.toString());
+        ViewPra.setBackgroundResource(R.drawable.ic_spinner);
 
         return ViewPra;
     }

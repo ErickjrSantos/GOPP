@@ -46,6 +46,7 @@ public class CustomAdapterSpinnerNumPrateleiras extends BaseAdapter {
         NumeroPrateleira pretNum = numPrateleiras.get(position);
         TextView numPRA = new TextView(context);
         numPRA.setText(pretNum.toString());
+        numPRA.setBackgroundResource(R.drawable.ic_spinner);
         return numPRA;
     }
 }

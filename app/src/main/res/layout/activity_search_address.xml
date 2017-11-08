@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorSpinner"
     tools:context="com.example.admin.estoquescan.SearchAddressActivity">
 
     <TextView
@@ -12,27 +13,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/sizeText"
-        android:text="E Loja ou Estoque?"
+        android:text="@string/textoPerguntaLojaEstoque"
         />
 
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_gravity="center"
 
         >
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/tipoLoja"
-            android:text="LOJA"
+            android:text="@string/textoLoja"
 
             />
         <RadioButton
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:text="@string/textoEstoque"
             android:id="@+id/tipoEstoque"
-            android:text="ESTOQUE"
             />
 
     </RadioGroup>
@@ -91,27 +93,49 @@
         android:layout_height="wrap_content"
         />
 
+<GridLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:foregroundGravity="center"
+    >
+   <include layout="@layout/activity_search_address_button">
 
-    <Button
-        android:id="@+id/btnPesquisaSearch"
+   </include>
+</GridLayout>
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pesquisar produtos"
-        />
+        android:textSize="@dimen/sizeText"
+       />
+    <TextView
+        android:id="@+id/codigoProduto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sizeText"
+        android:gravity="center"
+       />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/sizeText"
-        android:text="Produto: "/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/sizeText"
-        android:text="PLU: "/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/sizeText"
-        android:text="Validade: "/>
+
+    </GridLayout>
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/validadeProduto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sizeText" />
+
+        <TextView
+            android:id="@+id/precoProduto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
+
+    </GridLayout>
 </LinearLayout>

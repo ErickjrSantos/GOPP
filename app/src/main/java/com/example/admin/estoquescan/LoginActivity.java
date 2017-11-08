@@ -1,7 +1,11 @@
 package com.example.admin.estoquescan;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -62,11 +66,14 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 ConnectionLogin CL = new ConnectionLogin();
                 String password = mUserPassword.getText().toString();
                 String nome = mUserName.getText().toString();
 
                 try {
+
+
                     User user = CL.execute(nome,password).get();
                     User.setSavedUser(user);
 
@@ -82,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                         Intent goHome = new Intent(LoginActivity.this,MainActivity.class);
                         startActivity(goHome);
                         finish();
+
                     }else{
                         Toast.makeText(LoginActivity.this, "Senha ou Usuario Incorretos", Toast.LENGTH_SHORT).show();
                     }
@@ -89,12 +97,38 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+
             }
 
 
         });
 
     }
+    public ProgressDialog dialog;
+
+    public void dialogWaiting(){
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Espere....");
+        dialog.setCancelable(true);
+        dialog.setIndeterminate(true);
+        dialog.show();
+        new Thread() {
+            @Override
+            public void run() {
+                try{
+                        Thread.sleep(3000);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+
+            }
+
+        }.start();
+
+    }
+
 
 
 }

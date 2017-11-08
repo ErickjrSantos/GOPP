@@ -24,7 +24,7 @@ public class CustomAdapterSpinner extends BaseAdapter {
     }
 
     public void setEstoques(List<Estoque> estoques){
-       // this.estoques.clear();
+
         this.estoques = estoques;
         notifyDataSetChanged(); //notificar que mudou a porra toda
     }
@@ -50,7 +50,7 @@ public class CustomAdapterSpinner extends BaseAdapter {
         Estoque estoque = estoques.get(position);
         TextView  viewEst = new TextView(context);
         viewEst.setText(estoque.toString());
-
+        viewEst.setBackgroundResource(R.drawable.ic_spinner);
         return viewEst;
     }
 

@@ -19,6 +19,6 @@ public class Prateleira {
 
     @Override
     public String toString() {
-        return getNome_prateleira();
+        return getNome_prateleira()+"\nID: "+ getId_prateleira() ;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.admin.estoquescan;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,7 @@ public class AddressRegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_register);
+        int intent = getIntent().getIntExtra("endereco",0);
 
         txtAndar = (EditText) findViewById(R.id.txtAndarPrateleira);
         txtNomeEstoque = (EditText) findViewById(R.id.txtnomeEstoque);
@@ -31,6 +33,9 @@ public class AddressRegisterActivity extends AppCompatActivity {
         final CheckBox checkLoja = (CheckBox) findViewById(R.id.lojaBox);
         final CheckBox checkEstoque = (CheckBox) findViewById(R.id.estoqueBox);
         checkEstoque.setChecked(true);
+
+
+
 
         Button btbCadastro = (Button) findViewById(R.id.botaoEnvia);
         btbCadastro.setOnClickListener(new View.OnClickListener() {

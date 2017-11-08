@@ -54,6 +54,7 @@ public class CustomAdapterSpinnerCorredores extends BaseAdapter {
         Corredor corredor = corredores.get(position);
         TextView viewCor = new TextView(context);
         viewCor.setText(corredor.toString());
+        viewCor.setBackgroundResource(R.drawable.ic_spinner);
         return viewCor;
     }
 }

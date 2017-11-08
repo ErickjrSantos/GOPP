@@ -20,6 +20,6 @@ public class Corredor {
 
     @Override
     public String toString() {
-        return getNome_corredor()+" ID: "+ getId_corredor();
+        return " ID: "+ getId_corredor()+"\n"+getNome_corredor();
     }
 }

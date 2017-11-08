@@ -41,4 +41,13 @@
     <string name="scanAgain">Ler outro código de barras</string>
     <string name="editValidade">Atualizar a validade</string>
     <!--            ScanActivity            -->
+
+    <!--            SearchAddressActivity         -->
+    <string name="textoLoja">LOJA</string>
+    <string name="textoEstoque">ESTOQUE</string>
+    <string name="textoPerguntaLojaEstoque">Loja ou Estoque ?</string>
+
+    <!--            SearchAddressActivity         -->
+
+
 </resources>

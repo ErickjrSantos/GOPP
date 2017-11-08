@@ -10,7 +10,6 @@ public class ExpirationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expiration);
 
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
     }
 
     @Override

@@ -6,14 +6,17 @@ public class Product {
     private String address, addressType;
     private int stock;
 
+
+
     public Product(String barCode, String internalCode, String description, int stock, String price, boolean sale){
-        setBarCode(barCode);
-        setInternalCode(internalCode);
-        setDescription(description);
-        setStock(stock);
-        setPrice(price);
-        setInSale(sale);
+        this.setBarCode(barCode);
+        this.setInternalCode(internalCode);
+        this.setDescription(description);
+        this.setStock(stock);
+        this.setPrice(price);
+        this.setInSale(sale);
     }
+    public Product(){}
 
     public String getAddressType() {return addressType;}
 

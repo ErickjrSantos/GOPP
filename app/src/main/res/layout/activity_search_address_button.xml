@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btn_retira_produto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        android:freezesText="false"
+        android:gravity="center"
+        android:text="Retira Produto" />
+
+    <Button
+        android:id="@+id/btn_adciona_produto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        android:freezesText="false"
+        android:gravity="center"
+        android:text="Adciona Produto" />
+</GridLayout>

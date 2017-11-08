@@ -1,28 +1,23 @@
 package com.example.admin.estoquescan;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.Fragmento.FragmentDialog;
 import com.example.admin.estoquescan.Classes.Corredor;
 import com.example.admin.estoquescan.Classes.Estoque;
 import com.example.admin.estoquescan.Classes.Flags;
@@ -32,7 +27,6 @@ import com.example.admin.estoquescan.Classes.Product;
 import com.example.admin.estoquescan.Classes.Produto;
 import com.example.admin.estoquescan.Connection.ConnectionBuscaProduto;
 import com.example.admin.estoquescan.Connection.ConnectionBuscaProdutoMysql;
-import com.example.admin.estoquescan.Connection.ConnectionCadastro;
 import com.example.admin.estoquescan.Connection.ConnectionScan;
 import com.example.admin.estoquescan.Connection.ConnectionSpinnerNumeroPrateleira;
 import com.example.admin.estoquescan.Connection.ConnectionSpinnerSearch;
@@ -41,14 +35,7 @@ import com.example.admin.estoquescan.Connection.ConnectionSpinnerSearchLoja;
 import com.example.admin.estoquescan.Connection.ConnectionSpinnersearchPrateleira;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.zip.Inflater;
 
 public class SearchAddressActivity extends AppCompatActivity {
 
@@ -127,24 +114,33 @@ public class SearchAddressActivity extends AppCompatActivity {
             }
         });
 
-        final String[] string = {"teste","teste2","teste3"};
 
         Button BTNRetira = (Button) findViewById(R.id.btn_retira_produto);
         BTNRetira.setOnClickListener(new View.OnClickListener() {
+            View v = getLayoutInflater().inflate(R.layout.alert_dialog_retira,null);
+            EditText txtnumber = (EditText) findViewById(R.id.editText4);
+            int quant;
+
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(SearchAddressActivity.this);
-                builder.setMessage("OLHA EU AQUI ;)")
-                        .setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                builder.setMessage("Quantas unidades voce deseja retirar ? ")
+                        .setView(v)
+                        .setCancelable(true)
+                        .setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                              quant = 6;
+                                Toast.makeText(SearchAddressActivity.this, "Teste"+ quant, Toast.LENGTH_SHORT).show();
 
                             }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
 
-                            @Override
-                            public void onNothingSelected(AdapterView<?> adapterView) {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
 
-                            }
+                                    }
                         }).show();
             }
         });

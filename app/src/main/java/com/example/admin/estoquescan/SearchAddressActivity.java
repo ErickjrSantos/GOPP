@@ -1,18 +1,17 @@
 package com.example.admin.estoquescan;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -37,7 +36,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import java.util.ArrayList;
 
-public class SearchAddressActivity extends AppCompatActivity {
+public class SearchAddressActivity extends AppCompatActivity implements NumberPicker.OnValueChangeListener{
 
     int txtTipo;
     Spinner spnNomeEstoque;
@@ -45,12 +44,19 @@ public class SearchAddressActivity extends AppCompatActivity {
     Spinner spnPrateleira;
     Spinner spnNumeroPrateleira;
 
+    String titulo;
+    String subtitulo;
+
     TextView txtPreco;
     TextView txtEstoque;
     TextView txtTitulo;
 
+    int value = 0;
+
     private Flags flags = Flags.getInstance();
     int unidade = 1;
+
+    static Dialog builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +65,6 @@ public class SearchAddressActivity extends AppCompatActivity {
 
         final RadioButton tipoLoja = (RadioButton) findViewById(R.id.tipoLoja);
         final RadioButton tipoEstoque = (RadioButton) findViewById(R.id.tipoEstoque);
-
-
 
         spnNomeEstoque = (Spinner) findViewById(R.id.spinnerEstoqueSearch);
         spnCorredor = (Spinner) findViewById(R.id.spinnerCorredorSearch);
@@ -76,11 +80,13 @@ public class SearchAddressActivity extends AppCompatActivity {
             public void onClick(View view) {
                 try {
                     updateLoja();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
+
         tipoEstoque.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,6 +97,7 @@ public class SearchAddressActivity extends AppCompatActivity {
                 }
             }
         });
+
         addSpinnerEstoque();
         addSpinnerCorredor();
         addSpinnerPrateleira();
@@ -109,6 +116,7 @@ public class SearchAddressActivity extends AppCompatActivity {
                     IntentIntegrator scanIntegrator = new IntentIntegrator(SearchAddressActivity.this);
                     scanIntegrator.initiateScan();
                     flags.setFirstScan(false);
+                    
                 }
 
             }
@@ -117,36 +125,61 @@ public class SearchAddressActivity extends AppCompatActivity {
 
         Button BTNRetira = (Button) findViewById(R.id.btn_retira_produto);
         BTNRetira.setOnClickListener(new View.OnClickListener() {
-            View v = getLayoutInflater().inflate(R.layout.alert_dialog_retira,null);
-            EditText txtnumber = (EditText) findViewById(R.id.editText4);
-            int quant;
-
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(SearchAddressActivity.this);
-                builder.setMessage("Quantas unidades voce deseja retirar ? ")
-                        .setView(v)
-                        .setCancelable(true)
-                        .setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                              quant = 6;
-                                Toast.makeText(SearchAddressActivity.this, "Teste"+ quant, Toast.LENGTH_SHORT).show();
 
-                            }
-                        })
-                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                Toast.makeText(SearchAddressActivity.this, "TesteRetira", Toast.LENGTH_SHORT).show();
 
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                                    }
-                        }).show();
             }
         });
 
 
     }
+    public  Product show(final Product produto){
+        final Dialog builder = new Dialog(SearchAddressActivity.this);
+        builder.setContentView(R.layout.alert_dialog_retira);
+
+        Button b1 =(Button)builder.findViewById(R.id.btnCancel);
+        Button b2 =(Button)builder.findViewById(R.id.btnRetira);
+        TextView t1 = (TextView)builder.findViewById(R.id.tv);
+        t1.setText("Quantos/as "+produto.getDescription()+" deseja retirar?\n"+"Em estoque: "+produto.getStock());
+        t1.setTextSize(20);
+        t1.setTextColor(getResources().getColor(R.color.precoNormal));
+        b1.setText("CANCELAR");
+        b1.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        b2.setText("RETIRAR");
+        b2.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+
+        final NumberPicker np = builder.findViewById(R.id.editText4);
+        if(produto.getStock()<= 0){
+            np.setMinValue(0);
+            np.setMaxValue(0);
+        }else{
+            np.setMinValue(0);
+            np.setMaxValue(produto.getStock());
+        }
+
+        np.setOnValueChangedListener(this);
+        np.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(SearchAddressActivity.this, "botao 01", Toast.LENGTH_SHORT).show();
+                builder.dismiss();
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int stock = produto.getStock();
+                Toast.makeText(SearchAddressActivity.this, " "+(stock - value), Toast.LENGTH_SHORT).show();
+                builder.dismiss();
+            }
+        });
+        builder.show();
+        return null;
+    }
+
     private  void updateLoja()throws Exception{
         ConnectionSpinnerSearchLoja conLoja = new ConnectionSpinnerSearchLoja();
         ArrayList<Estoque> estoques = (ArrayList<Estoque>) conLoja.execute().get();
@@ -183,7 +216,6 @@ public class SearchAddressActivity extends AppCompatActivity {
     public void addSpinnerEstoque(){
         CustomAdapterSpinner adapter = new CustomAdapterSpinner(SearchAddressActivity.this,null);
         spnNomeEstoque.setAdapter(adapter);
-        //spnNomeEstoque.setBackgroundResource(R.drawable.ic_spinner);
         spnNomeEstoque.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -277,12 +309,14 @@ public class SearchAddressActivity extends AppCompatActivity {
                     Produto produto = new Produto();
                      produto = (Produto) conMy.execute(l).get();
 
-                       String cod = produto.getCodBarra();
+                        String cod = produto.getCodBarra();
                         ConnectionBuscaProduto con = new ConnectionBuscaProduto();
                         prod = (Product) con.execute(cod).get();
                         String plu = prod.getInternalCode();
-                        String titulo = prod.getDescription();
-                        txtTitulo.setText(titulo + " PLU:  " + plu);
+                        String titulo =" "+ prod.getDescription();
+                        txtTitulo.setText(titulo + "\n PLU:  " + plu);
+
+                        show(prod);
 
 
                 } catch (Exception e) {
@@ -330,9 +364,6 @@ public class SearchAddressActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
-         String titulo;
-         String subtitulo;
-
         assert scanningResult != null;
         if (scanningResult.getContents() != null) {
             String scanBar = scanningResult.getContents();
@@ -343,9 +374,13 @@ public class SearchAddressActivity extends AppCompatActivity {
                     String preco = "R$ " + p.getPrice().replace('.', ',');
                     txtPreco.setText(preco);
                     txtEstoque.setText(String.valueOf(p.getStock()));
+                    int quantEstoque =  p.getStock();
                     titulo = p.getDescription();
                     subtitulo = "\nPLU: " + p.getInternalCode();
-                    txtTitulo.setText("Descrição: "+titulo + subtitulo);
+                    txtTitulo.setText("Descrição: "+titulo+"  "+quantEstoque);
+                    txtEstoque.setText(subtitulo);
+
+
                     if (p.isInSale()) {
                         txtPreco.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.precoPromocional));
                     } else {
@@ -355,7 +390,7 @@ public class SearchAddressActivity extends AppCompatActivity {
                     titulo = "Produto não encontrado!";
                     subtitulo = "Tente pesquisar novamente.";
                     txtTitulo.setText(titulo);
-
+                    txtEstoque.setText(subtitulo);
                 }
             } catch (Exception ex){
                 ex.printStackTrace();
@@ -368,4 +403,9 @@ public class SearchAddressActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+        Log.i("value is","oi"+ i1);
+        value = i1;
+    }
 }

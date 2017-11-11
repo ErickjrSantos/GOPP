@@ -1,16 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <EditText
-        android:id="@+id/editText4"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|center|fill"
+        />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <NumberPicker
+                    android:id="@+id/editText4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv"
+                    android:layout_gravity="center"
+                    android:gravity="center" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </GridLayout>
+
+    <GridLayout
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:inputType="numberSigned" />
+        android:layout_gravity="bottom|center"
+        android:foregroundGravity="center|fill"
+        android:isScrollContainer="false"
+        android:keepScreenOn="false"
+        android:keyboardNavigationCluster="false">
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom" />
+
+        <Button
+            android:id="@+id/btnRetira"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom" />
+
+    </GridLayout>
 
 
-</LinearLayout>
+</GridLayout>

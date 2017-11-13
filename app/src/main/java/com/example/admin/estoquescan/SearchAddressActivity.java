@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -55,9 +56,7 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
 
     private Flags flags = Flags.getInstance();
     int unidade = 1;
-
-    static Dialog builder;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,12 +111,14 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
                 }else{
                     txtTipo = 2;
                 }
-                if(flags.isFirstScan()) {
-                    IntentIntegrator scanIntegrator = new IntentIntegrator(SearchAddressActivity.this);
-                    scanIntegrator.initiateScan();
-                    flags.setFirstScan(false);
-                    
-                }
+                showAdd();
+
+//                if(flags.isFirstScan()) {
+//                    IntentIntegrator scanIntegrator = new IntentIntegrator(SearchAddressActivity.this);
+//                    scanIntegrator.initiateScan();
+//                    flags.setFirstScan(false);
+//
+//                }
 
             }
         });
@@ -135,32 +136,70 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
 
 
     }
-    public  Product show(final Product produto){
+
+    public void showAdd(){
+
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.seach_address_showadd);
+
+        Button cancel =dialog.findViewById(R.id.btnCanceladd);
+        Button adciona =dialog.findViewById(R.id.btnRetiraadd);
+        TextView text = dialog.findViewById(R.id.tv);
+
+        text.setText("Adcione mais "+prod.getDescription());
+        cancel.setText(getResources().getText(R.string.cancelar));
+        adciona.setText("ADCIONA");
+
+        final EditText ed = dialog.findViewById(R.id.editShowadd);
+        adciona.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ed.getText();
+                dialog.dismiss();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+    }
+
+
+
+
+    public  Product show(final Produto produto){
         final Dialog builder = new Dialog(SearchAddressActivity.this);
         builder.setContentView(R.layout.alert_dialog_retira);
 
-        Button b1 =(Button)builder.findViewById(R.id.btnCancel);
-        Button b2 =(Button)builder.findViewById(R.id.btnRetira);
-        TextView t1 = (TextView)builder.findViewById(R.id.tv);
-        t1.setText("Quantos/as "+produto.getDescription()+" deseja retirar?\n"+"Em estoque: "+produto.getStock());
+        Button b1 =builder.findViewById(R.id.btnCancel);
+        Button b2 =builder.findViewById(R.id.btnRetira);
+        TextView t1 = builder.findViewById(R.id.tv);
+        t1.setText("Quantos/as "+prod.getDescription()+" deseja retirar?\n"+" Estoque: "+prod.getStock()+"\n na prateleira: "+produto.getQuantLocal());
         t1.setTextSize(20);
         t1.setTextColor(getResources().getColor(R.color.precoNormal));
-        b1.setText("CANCELAR");
+        b1.setText(getResources().getText(R.string.cancelar));
         b1.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         b2.setText("RETIRAR");
         b2.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
+
         final NumberPicker np = builder.findViewById(R.id.editText4);
-        if(produto.getStock()<= 0){
+        if(produto.getQuantLocal()<= 0){
             np.setMinValue(0);
             np.setMaxValue(0);
         }else{
-            np.setMinValue(0);
-            np.setMaxValue(produto.getStock());
+            np.setMinValue(1);
+            int max = produto.getQuantLocal();
+            np.setMaxValue(max);
         }
 
         np.setOnValueChangedListener(this);
-        np.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -168,10 +207,12 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
                 builder.dismiss();
             }
         });
+
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int stock = produto.getStock();
+                int stock = produto.getQuantLocal();
+
                 Toast.makeText(SearchAddressActivity.this, " "+(stock - value), Toast.LENGTH_SHORT).show();
                 builder.dismiss();
             }
@@ -235,10 +276,9 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
 
             }
         });
-
     }
-    public void addSpinnerCorredor(){
 
+    public void addSpinnerCorredor(){
         try {
             CustomAdapterSpinnerCorredores adapterCor = new CustomAdapterSpinnerCorredores(SearchAddressActivity.this, null);
             spnCorredor.setAdapter(adapterCor);
@@ -246,12 +286,12 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     try {
+
                         updatePrateleira();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
                     try {
@@ -280,7 +320,6 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
                         e.printStackTrace();
                     }
                 }
-
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
                     try {
@@ -295,47 +334,47 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
             e.printStackTrace();
         }
     }
+
     Product prod = new Product();
     public void addSpinnerNumPrateleira(){
-
         try{
         CustomAdapterSpinnerNumPrateleiras adpterNumPra = new CustomAdapterSpinnerNumPrateleiras(SearchAddressActivity.this,null);
         spnNumeroPrateleira.setAdapter(adpterNumPra);
         spnNumeroPrateleira.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
                 try {
-                    ConnectionBuscaProdutoMysql conMy = new ConnectionBuscaProdutoMysql();
-                    Produto produto = new Produto();
+                     ConnectionBuscaProdutoMysql conMy = new ConnectionBuscaProdutoMysql();
+                     Produto produto = new Produto();
                      produto = (Produto) conMy.execute(l).get();
 
                         String cod = produto.getCodBarra();
                         ConnectionBuscaProduto con = new ConnectionBuscaProduto();
                         prod = (Product) con.execute(cod).get();
+                        int estoq = prod.getStock();
                         String plu = prod.getInternalCode();
                         String titulo =" "+ prod.getDescription();
-                        txtTitulo.setText(titulo + "\n PLU:  " + plu);
+                        txtTitulo.setText(titulo + "\n PLU:  " + plu+"\n"+" Quantidade em Estoque ERP: "+estoq);
 
-                        show(prod);
-
+                        show(produto);
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    txtTitulo.setText("nao ha produtos");
+                    onNothingSelected(adapterView);
                 }
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                    txtTitulo.setText("");
+                    txtTitulo.setText(" ");
+                    showAdd();
             }
         });
         }catch(Exception e){
             e.printStackTrace();
         }
     }
-
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
@@ -363,7 +402,6 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-
         assert scanningResult != null;
         if (scanningResult.getContents() != null) {
             String scanBar = scanningResult.getContents();
@@ -379,7 +417,6 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
                     subtitulo = "\nPLU: " + p.getInternalCode();
                     txtTitulo.setText("Descrição: "+titulo+"  "+quantEstoque);
                     txtEstoque.setText(subtitulo);
-
 
                     if (p.isInSale()) {
                         txtPreco.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.precoPromocional));

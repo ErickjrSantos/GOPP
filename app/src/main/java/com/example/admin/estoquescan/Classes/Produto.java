@@ -10,6 +10,11 @@ public class Produto {
     private int id_produto;
     private String data_validade;
     private String codBarra;
+    private int quantLocal;
+
+    public int getQuantLocal() {return quantLocal;}
+
+    public void setQuantLocal(int quantLocal) {this.quantLocal = quantLocal;}
 
     public int getId_produto() {return id_produto;}
 

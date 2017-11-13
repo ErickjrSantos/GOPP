@@ -54,7 +54,7 @@ public class ConnectionBuscaProdutoMysql extends AsyncTask {
             String codBarra = json.getString("codBarra");
             int codInterno = json.getInt("id_produto");
             String data = json.getString("data_validade");
-            String check = json.getString("check");
+            int quantLocal = json.getInt("quantLocal");
 
 
             Produto produto = new Produto();
@@ -62,6 +62,7 @@ public class ConnectionBuscaProdutoMysql extends AsyncTask {
                 produto.setCodBarra(codBarra);
                 produto.setId_produto(codInterno);
                 produto.setData_validade(data);
+                produto.setQuantLocal(quantLocal);
                 return produto;
 
 

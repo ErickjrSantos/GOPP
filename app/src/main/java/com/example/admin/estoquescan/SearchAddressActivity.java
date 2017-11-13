@@ -150,27 +150,31 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
         new Thread(new Runnable() {
             @Override
             public void run() {
+                try{
                 while (progressStatus <100){
                     progressStatus += 1;
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
+                            Toast.makeText(SearchAddressActivity.this, "Teste01", Toast.LENGTH_SHORT).show();
                         load.setProgress(progressStatus);
-                        textView.setText(progressStatus+"/"+load.getMax());
+                       // textView.setText(progressStatus+"/"+load.getMax());
                         }
                     });
-                    try{
-                        Thread.sleep(600);
 
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
+                        Thread.sleep(100);
+                        Toast.makeText(SearchAddressActivity.this, "Teste00", Toast.LENGTH_SHORT).show();
+
+                }
+
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }
         }).start();
 
     }
-    
+
 
     public void showAdd(boolean haveProd){
         final Dialog dialog = new Dialog(this);

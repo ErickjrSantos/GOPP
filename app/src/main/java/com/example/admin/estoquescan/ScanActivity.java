@@ -1,6 +1,7 @@
 package com.example.admin.estoquescan;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -29,12 +30,14 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
         txtPreco = (TextView) findViewById(R.id.textPreco);
         txtEstoque = (TextView) findViewById(R.id.textEstoque);
         Button scanBtn = (Button) findViewById(R.id.scan_button);
+        FloatingActionButton btn = (FloatingActionButton) findViewById(R.id.btnAlert);
         scanBtn.setOnClickListener(this);
-        if(flags.isFirstScan()) {
-            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-            scanIntegrator.initiateScan();
-            flags.setFirstScan(false);
-        }
+
+//        if(flags.isFirstScan()) {
+//            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+//            scanIntegrator.initiateScan();
+//            flags.setFirstScan(false);
+//        }
     }
 
     public void onClick(View v){

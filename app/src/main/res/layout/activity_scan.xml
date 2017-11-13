@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:id="@+id/myFrameLayout"
+<FrameLayout android:id="@+id/myFrameLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    tools:context="com.example.admin.estoquescan.ScanActivity">
+    tools:context="com.example.admin.estoquescan.ScanActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -101,7 +101,34 @@
                 android:layout_marginBottom="166dp"
                 android:text="@string/scanAgain"
                 android:freezesText="true"/>
-        </LinearLayout>
-    </ScrollView>
 
+
+        </LinearLayout>
+
+
+    </ScrollView>
+<GridLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|end"
+    >
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnAlert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:src="@android:drawable/ic_dialog_alert"
+        app:backgroundTint="@color/precoPromocional" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnValid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/ic_gest_validade"
+        app:backgroundTint="@color/colorPrimaryDark" />
+</GridLayout>
 </FrameLayout>

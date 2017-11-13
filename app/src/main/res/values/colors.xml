@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#7AB64D</color>
     <color name="colorAccent">#9AD66D</color>
 
-    <color name="precoPromocional">#D0D00000</color>
+    <color name="precoPromocional">#d0d00000</color>
     <color name="precoNormal">#000000</color>
 
     <color name="colorSpinner">#00fdfdfd</color>

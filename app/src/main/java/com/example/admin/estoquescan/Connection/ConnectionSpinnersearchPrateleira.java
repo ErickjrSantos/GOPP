@@ -56,15 +56,18 @@ public class ConnectionSpinnersearchPrateleira extends AsyncTask {
             JSONArray JEst = json.getJSONArray("Prateleiras");
 
             ArrayList<Prateleira> PrateleiraArray = new ArrayList<>();
+            Prateleira pra = new Prateleira();
+            pra.setId_prateleira(0);
+            pra.setNome_prateleira("");
+            PrateleiraArray.add(pra);
 
             for (int i = 0; i < quantidadPrateleiras; i++) {
+
                 int id_prateleira = JEst.getJSONObject(i).getInt("id_prateleira");
                 String nome_prateleira = JEst.getJSONObject(i).getString("nome_prateleira");
-
                 Prateleira prateleira = new Prateleira();
                 prateleira.setId_prateleira(id_prateleira);
                 prateleira.setNome_prateleira(nome_prateleira);
-
                 PrateleiraArray.add(prateleira);
             }
 

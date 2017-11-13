@@ -32,6 +32,13 @@ public class Estoque {
 
     @Override
     public String toString() {
-        return getNome_estoque()+"\nSIGLA:   "+getSigla();
+        String sigla;
+
+        if (getId_estoque()==0){
+            sigla = "";
+        }else{
+            sigla = "\nSIGLA:   ";
+        }
+        return getNome_estoque()+sigla+getSigla();
     }
 }

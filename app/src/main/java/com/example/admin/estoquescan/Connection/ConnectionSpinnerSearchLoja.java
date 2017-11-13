@@ -52,6 +52,11 @@ public class ConnectionSpinnerSearchLoja extends AsyncTask {
                 JSONArray JEst = json.getJSONArray("EST");
 
                 ArrayList<Estoque> estoqueArray = new ArrayList<>();
+                Estoque est = new Estoque();
+                est.setNome_estoque("");
+                est.setId_estoque(0);
+                est.setSigla("");
+                estoqueArray.add(est);
 
                 for(int i = 0; i < quantidadEstoques; i++ ){
                     int idEstoque = JEst.getJSONObject(i).getInt("id_estoque");

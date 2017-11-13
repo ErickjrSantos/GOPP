@@ -53,9 +53,12 @@ public class ConnectionSpinnerSearch extends AsyncTask {
 
             ArrayList<Estoque> estoqueArray = new ArrayList<>();
 
+            Estoque est = new Estoque();
+            est.setId_estoque(0);
+            est.setNome_estoque("");
+            est.setSigla("");
+            estoqueArray.add(est);
             for(int i = 0; i < quantidadEstoques ; i++ ){
-
-
                     int idEstoque = JEst.getJSONObject(i).getInt("id_estoque");
                     String nomeEstoque = JEst.getJSONObject(i).getString("nome_estoque");
                     String sigla = JEst.getJSONObject(i).getString("sigla");

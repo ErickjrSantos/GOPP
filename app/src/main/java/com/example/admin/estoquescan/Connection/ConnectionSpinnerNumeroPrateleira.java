@@ -58,7 +58,14 @@ public class ConnectionSpinnerNumeroPrateleira extends AsyncTask {
 
             ArrayList<NumeroPrateleira> NumPrateleiraArray = new ArrayList<>();
 
+            NumeroPrateleira num = new NumeroPrateleira();
+            num.setId_endereco(0);
+            num.setEndereco("");
+            num.setAndar("");
+            NumPrateleiraArray.add(num);
+
             for (int i = 0; i < quantidadPrateleiras; i++) {
+
                 int id_endereco = JEst.getJSONObject(i).getInt("id_endereco");
                 String nome_NumPrateleira = JEst.getJSONObject(i).getString("andar");
                 String endereco = JEst.getJSONObject(i).getString("endereco");

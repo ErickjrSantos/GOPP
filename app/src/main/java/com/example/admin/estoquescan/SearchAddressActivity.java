@@ -1,7 +1,9 @@
 package com.example.admin.estoquescan;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -56,7 +59,7 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
 
     private Flags flags = Flags.getInstance();
     int unidade = 1;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +82,7 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
             public void onClick(View view) {
                 try {
                     updateLoja();
-
+                    Loading();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -111,18 +114,17 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
                 }else{
                     txtTipo = 2;
                 }
-                showAdd();
 
-//                if(flags.isFirstScan()) {
-//                    IntentIntegrator scanIntegrator = new IntentIntegrator(SearchAddressActivity.this);
-//                    scanIntegrator.initiateScan();
-//                    flags.setFirstScan(false);
-//
-//                }
+                showAdd(true);
+
+                if(flags.isFirstScan()) {
+                    IntentIntegrator scanIntegrator = new IntentIntegrator(SearchAddressActivity.this);
+                    scanIntegrator.initiateScan();
+                    flags.setFirstScan(false);
+                }
 
             }
         });
-
 
         Button BTNRetira = (Button) findViewById(R.id.btn_retira_produto);
         BTNRetira.setOnClickListener(new View.OnClickListener() {
@@ -134,23 +136,55 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
             }
         });
 
+    }
+    int progressStatus = 0;
+    public void Loading(){
+        final ProgressBar load;
+
+        final TextView textView;
+        final Handler handler = new Handler();
+        setContentView(R.layout.load_progress);
+
+        load = (ProgressBar)findViewById(R.id.progressBar_cyclic);
+        textView = (TextView) findViewById(R.id.txtProgress);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (progressStatus <100){
+                    progressStatus += 1;
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                        load.setProgress(progressStatus);
+                        textView.setText(progressStatus+"/"+load.getMax());
+                        }
+                    });
+                    try{
+                        Thread.sleep(600);
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
 
     }
+    
 
-    public void showAdd(){
-
+    public void showAdd(boolean haveProd){
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.seach_address_showadd);
 
-        Button cancel =dialog.findViewById(R.id.btnCanceladd);
-        Button adciona =dialog.findViewById(R.id.btnRetiraadd);
+        Button cancel = dialog.findViewById(R.id.btnCanceladd);
+        Button adciona = dialog.findViewById(R.id.btnRetiraadd);
         TextView text = dialog.findViewById(R.id.tv);
 
         text.setText("Adcione mais "+prod.getDescription());
         cancel.setText(getResources().getText(R.string.cancelar));
         adciona.setText("ADCIONA");
-
         final EditText ed = dialog.findViewById(R.id.editShowadd);
+
         adciona.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -186,7 +220,6 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
         b1.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         b2.setText("RETIRAR");
         b2.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-
 
         final NumberPicker np = builder.findViewById(R.id.editText4);
         if(produto.getQuantLocal()<= 0){
@@ -261,7 +294,11 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 try {
-                    updateCorredor();
+                    if(adapterView.getItemIdAtPosition(i)==0){
+                        onNothingSelected(adapterView);
+                    }else {
+                        updateCorredor();
+                    }
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -273,7 +310,6 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         });
     }
@@ -286,8 +322,11 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     try {
-
-                        updatePrateleira();
+                        if(adapterView.getItemIdAtPosition(i)==0){
+                            onNothingSelected(adapterView);
+                        }else {
+                            updatePrateleira();
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -315,7 +354,11 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     try {
-                        updateNumPrateleira();
+                        if(adapterView.getItemIdAtPosition(i)==0) {
+                            onNothingSelected(adapterView);
+                        }else{
+                            updateNumPrateleira();
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -345,20 +388,24 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 try {
-                     ConnectionBuscaProdutoMysql conMy = new ConnectionBuscaProdutoMysql();
-                     Produto produto = new Produto();
-                     produto = (Produto) conMy.execute(l).get();
+                    if(adapterView.getItemIdAtPosition(i)==0){
+                        txtTitulo.setText("");
+                        onNothingSelected(adapterView);
+                    }else {
+                        ConnectionBuscaProdutoMysql conMy = new ConnectionBuscaProdutoMysql();
+                        Produto produto = new Produto();
+                        produto = (Produto) conMy.execute(l).get();
 
                         String cod = produto.getCodBarra();
                         ConnectionBuscaProduto con = new ConnectionBuscaProduto();
                         prod = (Product) con.execute(cod).get();
                         int estoq = prod.getStock();
                         String plu = prod.getInternalCode();
-                        String titulo =" "+ prod.getDescription();
-                        txtTitulo.setText(titulo + "\n PLU:  " + plu+"\n"+" Quantidade em Estoque ERP: "+estoq);
+                        String titulo = " " + prod.getDescription();
+                        txtTitulo.setText(titulo + "\n PLU:  " + plu + "\n" + " Quantidade em Estoque ERP: " + estoq);
 
                         show(produto);
-
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     onNothingSelected(adapterView);
@@ -368,7 +415,7 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                     txtTitulo.setText(" ");
-                    showAdd();
+                    //showAdd(false);
             }
         });
         }catch(Exception e){

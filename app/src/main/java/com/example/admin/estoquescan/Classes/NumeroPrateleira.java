@@ -23,6 +23,18 @@ public class NumeroPrateleira {
 
     @Override
     public String toString() {
-        return "ANDAR: "+String.valueOf(getAndar())+"°"+"\nEnd:. "+getEndereco();
+        String andar;
+        String grau;
+        String endereco;
+        if(getId_endereco()==0){
+            andar = "";
+            grau = "";
+            endereco = "";
+        }else{
+            andar = "ANDAR: "+String.valueOf(getAndar());
+            grau = "°";
+            endereco = "\nEnd:. ";
+        }
+        return andar+grau+endereco+getEndereco();
     }
 }

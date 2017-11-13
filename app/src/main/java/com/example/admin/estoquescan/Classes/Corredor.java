@@ -20,6 +20,15 @@ public class Corredor {
 
     @Override
     public String toString() {
-        return " ID: "+ getId_corredor()+"\n"+getNome_corredor();
+        String id;
+        String pulo;
+        if(getId_corredor()==0){
+            id = "";
+            pulo ="";
+        }else{
+            id=" ID: "+getId_corredor();
+            pulo = "\n";
+        }
+        return id +pulo+getNome_corredor();
     }
 }

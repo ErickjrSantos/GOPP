@@ -61,16 +61,17 @@ public class ConnectionSpinnerSearchCorredor extends AsyncTask {
             JSONArray JEst = json.getJSONArray("corredores");
 
             ArrayList<Corredor> CorredorArray = new ArrayList<>();
+            Corredor corr = new Corredor();
+            corr.setNome_corredor("");
+            corr.setId_corredor(0);
+            CorredorArray.add(corr);
 
             for (int i = 0; i < quantidadEstoques; i++) {
                 int id_corredor = JEst.getJSONObject(i).getInt("id_corredor");
                 String nome_corredor = JEst.getJSONObject(i).getString("nome_corredor");
-
-
                 Corredor corredor = new Corredor();
                 corredor.setId_corredor(id_corredor);
                 corredor.setNome_corredor(nome_corredor);
-
 
                 CorredorArray.add(corredor);
             }

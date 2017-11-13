@@ -19,6 +19,15 @@ public class Prateleira {
 
     @Override
     public String toString() {
-        return getNome_prateleira()+"\nID: "+ getId_prateleira() ;
+        String preFixo;
+        String idPr;
+        if(getId_prateleira()==0){
+            preFixo = "";
+            idPr ="";
+        }else{
+            preFixo = "\nID: ";
+            idPr = String.valueOf(getId_prateleira());
+        }
+        return getNome_prateleira()+preFixo+ idPr ;
     }
 }

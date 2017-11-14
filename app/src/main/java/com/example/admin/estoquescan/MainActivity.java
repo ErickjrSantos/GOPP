@@ -15,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -51,19 +50,8 @@ public class MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
-        try {
-            ConnectionComentarios connect = new ConnectionComentarios();
-            ArrayList<Comentarios> comentario = (ArrayList<Comentarios>) connect.execute().get();
 
-            ListView comentariosList = (ListView) findViewById(R.id.lista_comentarios);
-            AdpterListaComentarios adpter = new AdpterListaComentarios(comentario,this);
-            comentariosList.setAdapter(adpter);
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-
+        listacomentarios();
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -86,9 +74,32 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+            listacomentarios();
         } else {
             finish();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        listacomentarios();
+        super.onResume();
+    }
+
+    public void listacomentarios(){
+        try {
+            ConnectionComentarios connect = new ConnectionComentarios();
+            ArrayList<Comentarios> comentario = (ArrayList<Comentarios>) connect.execute().get();
+
+            ListView comentariosList = (ListView) findViewById(R.id.lista_comentarios);
+            AdpterListaComentarios adpter = new AdpterListaComentarios(comentario,this);
+            comentariosList.setAdapter(adpter);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override

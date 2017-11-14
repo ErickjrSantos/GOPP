@@ -51,9 +51,7 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();
         }else if(v.getId()==R.id.btnAlert){
-            if(getSupportActionBar()!=null){
-                show();
-            }
+            show();
         }
     }
 

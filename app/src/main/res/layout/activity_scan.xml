@@ -86,28 +86,12 @@
                 android:textSize="@dimen/txtTextSize"
                 android:freezesText="true"/>
 
-            <Button
-                android:id="@+id/editValidade"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/heightBtn"
-                android:layout_marginTop="50sp"
-                android:text="@string/editValidade"
-                android:freezesText="true"/>
-
-            <Button
-                android:id="@+id/scan_button"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/heightBtn"
-                android:layout_marginBottom="166dp"
-                android:text="@string/scanAgain"
-                android:freezesText="true"/>
-
 
         </LinearLayout>
 
 
     </ScrollView>
-<GridLayout
+ <GridLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom|end"
@@ -126,9 +110,25 @@
         android:id="@+id/btnValid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="10dp"
         android:layout_marginBottom="5dp"
         android:src="@drawable/ic_gest_validade"
         app:backgroundTint="@color/colorPrimaryDark" />
-</GridLayout>
+     <android.support.design.widget.FloatingActionButton
+         android:id="@+id/btnScan"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginRight="10dp"
+         android:layout_marginBottom="5dp"
+         android:src="@drawable/ic_barcode"
+         app:backgroundTint="@color/colorPrimaryDark" />
+     <android.support.design.widget.FloatingActionButton
+         android:id="@+id/btnPesquisa"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginRight="10dp"
+         android:layout_marginBottom="5dp"
+         android:src="@android:drawable/ic_menu_search"
+         app:backgroundTint="@color/colorPrimaryDark" />
+ </GridLayout>
 </FrameLayout>

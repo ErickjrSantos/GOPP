@@ -15,12 +15,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.admin.estoquescan.Classes.Comentarios;
 import com.example.admin.estoquescan.Classes.User;
-
+import com.example.admin.estoquescan.Connection.ConnectionComentarios;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -38,15 +42,29 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
+        try {
+            ConnectionComentarios connect = new ConnectionComentarios();
+            ArrayList<Comentarios> comentario = (ArrayList<Comentarios>) connect.execute().get();
+
+            ListView comentariosList = (ListView) findViewById(R.id.lista_comentarios);
+            AdpterListaComentarios adpter = new AdpterListaComentarios(comentario,this);
+            comentariosList.setAdapter(adpter);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

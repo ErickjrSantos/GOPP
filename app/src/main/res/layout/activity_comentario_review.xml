@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.admin.estoquescan.comentario_Activity">
 
-    <GridLayout
+    <TextView
+        android:id="@+id/txt_comentario_nome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome: Erick Jhonatas Rocha Santos"
+        android:textSize="20dp" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/comentario_nome_detalhes_pessoa"></include>
-    </GridLayout>
-</android.support.constraint.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/txt_texto_comentario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="testetetststststst" />
+    </LinearLayout>
+
+</LinearLayout>

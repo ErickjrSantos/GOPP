@@ -10,15 +10,16 @@
         android:icon="@mipmap/gopp_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/gopp_launcher"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:screenOrientation="portrait">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".ScanActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".LoginActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
-
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -27,12 +28,18 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
-            />
-        <activity android:name=".AddressRegisterActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ExpirationActivity" android:screenOrientation="portrait" />
-        <activity android:name=".SearchAddressActivity" android:screenOrientation="portrait"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddressRegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ExpirationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SearchAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".comentario_Activity"></activity>
     </application>
 
 </manifest>

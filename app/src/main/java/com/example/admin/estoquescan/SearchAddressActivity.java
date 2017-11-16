@@ -153,18 +153,17 @@ public class SearchAddressActivity extends AppCompatActivity implements NumberPi
                 try{
                 while (progressStatus <100){
                     progressStatus += 1;
+
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(SearchAddressActivity.this, "Teste01", Toast.LENGTH_SHORT).show();
                         load.setProgress(progressStatus);
-                       // textView.setText(progressStatus+"/"+load.getMax());
+
                         }
+
+
                     });
-
-                        Thread.sleep(100);
-                        Toast.makeText(SearchAddressActivity.this, "Teste00", Toast.LENGTH_SHORT).show();
-
+                    Thread.sleep(100);
                 }
 
                 }catch (Exception e){

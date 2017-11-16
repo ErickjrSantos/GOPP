@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -89,18 +90,40 @@ public class MainActivity extends AppCompatActivity
     public void listacomentarios(){
         try {
             ConnectionComentarios connect = new ConnectionComentarios();
-            ArrayList<Comentarios> comentario = (ArrayList<Comentarios>) connect.execute().get();
+            final ArrayList<Comentarios> comentario = (ArrayList<Comentarios>) connect.execute().get();
 
-            ListView comentariosList = (ListView) findViewById(R.id.lista_comentarios);
+            final ListView comentariosList = (ListView) findViewById(R.id.lista_comentarios);
             AdpterListaComentarios adpter = new AdpterListaComentarios(comentario,this);
             comentariosList.setAdapter(adpter);
 
-        }catch (Exception e){
+            comentariosList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent goComent = new Intent(MainActivity.this,comentario_Activity.class);
+                    int id = i;
+                    String posicao = comentario.get(id).getComentario();
+                    String nome = comentario.get(id).getNome();
+                    String item = comentario.get(id).getNome_produto();
+                    String data = comentario.get(id).getData();
+
+                    goComent.putExtra("posicao",posicao);
+                    goComent.putExtra("nome",nome);
+                    goComent.putExtra("item",item);
+                    goComent.putExtra("data",data);
+
+
+                    startActivity(goComent);
+                    onPause();
+                }
+            });
+            }catch (Exception e){
             e.printStackTrace();
         }
 
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

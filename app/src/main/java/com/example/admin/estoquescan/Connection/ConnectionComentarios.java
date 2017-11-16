@@ -58,6 +58,7 @@ public class ConnectionComentarios extends AsyncTask {
 
                 for(int i = 0; i < quanti; i++ ){
                     String comentario = JEst.getJSONObject(i).getString("comentario");
+                    int id_comentario = JEst.getJSONObject(i).getInt("id_comentario");
                     int usuario = JEst.getJSONObject(i).getInt("usuario");
                     int produto = JEst.getJSONObject(i).getInt("produto");
                     String data = JEst.getJSONObject(i).getString("data");
@@ -67,6 +68,7 @@ public class ConnectionComentarios extends AsyncTask {
 
                     Comentarios coment = new Comentarios();
                     coment.setComentario(comentario);
+                    coment.setId_comentarios(id_comentario);
                     coment.setUsuario(usuario);
                     coment.setProduto(produto);
                     coment.setNome(nome);

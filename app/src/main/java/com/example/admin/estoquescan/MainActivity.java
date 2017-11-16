@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity
                     Intent goComent = new Intent(MainActivity.this,comentario_Activity.class);
                     int id = i;
                     String posicao = comentario.get(id).getComentario();
+                    int id_coment = comentario.get(id).getId_comentarios();
                     String nome = comentario.get(id).getNome();
                     String item = comentario.get(id).getNome_produto();
                     String data = comentario.get(id).getData();
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity
                     goComent.putExtra("nome",nome);
                     goComent.putExtra("item",item);
                     goComent.putExtra("data",data);
-
+                    goComent.putExtra("ID",id_coment);
 
                     startActivity(goComent);
                     onPause();

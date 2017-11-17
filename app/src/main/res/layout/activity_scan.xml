@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     tools:context="com.example.admin.estoquescan.ScanActivity"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -131,4 +133,8 @@
          android:src="@android:drawable/ic_menu_search"
          app:backgroundTint="@color/colorPrimaryDark" />
  </GridLayout>
+
+
+
+
 </FrameLayout>

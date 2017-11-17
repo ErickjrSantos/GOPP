@@ -1,14 +1,20 @@
 package com.example.admin.estoquescan;
 import android.app.Dialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.admin.estoquescan.Classes.Flags;
@@ -16,6 +22,9 @@ import com.example.admin.estoquescan.Classes.Product;
 import com.example.admin.estoquescan.Connection.ConnectionScan;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ScanActivity extends AppCompatActivity implements OnClickListener {
 
@@ -52,10 +61,65 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
             scanIntegrator.initiateScan();
         }else if(v.getId()==R.id.btnAlert){
             show();
+        }else if(v.getId()==R.id.btnPesquisa){
+            search();
         }
     }
+//
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.options_menu,menu);
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        SearchView searchView = (SearchView) menu.findItem(R.id.search_bar_produtos);
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+//
+//        searchView.setIconifiedByDefault(false);
+//        return true;
+//    }
 
 
+    public void search(){
+        Dialog bud = new Dialog(this);
+        bud.setContentView(R.layout.search_show);
+
+        ListAdapter adapter;
+        List arrayList = new ArrayList();
+
+        arrayList.add("January");
+        arrayList.add("February");
+        arrayList.add("March");
+        arrayList.add("April");
+        arrayList.add("May");
+        arrayList.add("June");
+        arrayList.add("July");
+        arrayList.add("August");
+        arrayList.add("September");
+        arrayList.add("October");
+        arrayList.add("November");
+        arrayList.add("December");
+
+        
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) findViewById(R.id.search_bar_produtos);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
+
+        bud.show();
+
+    }
 
     @Override
     public void onBackPressed() {

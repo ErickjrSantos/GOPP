@@ -36,9 +36,9 @@
         <activity
             android:name=".ExpirationActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".SearchAddressActivity"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name=".SearchAddressActivity"-->
+            <!--android:screenOrientation="portrait" />-->
         <activity android:name=".comentario_Activity"></activity>
     </application>
 

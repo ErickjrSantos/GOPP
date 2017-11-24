@@ -5,26 +5,54 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     >
+
     <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        >
-        <TextView
-            android:id="@+id/txt_comentario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            />
-        <EditText
-            android:id="@+id/edit_comentario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Comentario"
-            />
+        android:id="@+id/gridLayout">
 
 
     </GridLayout>
+
+    <TextView
+        android:id="@+id/txt_comentario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        />
+
+    <EditText
+        android:id="@+id/edit_comentario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/gridLayout"
+        android:layout_marginTop="40dp"
+        android:hint="Comentario" />
+
+
+    <Button
+        android:id="@+id/btn_envia_comentario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_comentario"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="16dp"
+        android:layout_toEndOf="@+id/gridLayout"
+        android:gravity="center"
+        android:text="Button" />
+
+    <Button
+        android:id="@+id/cancel_comentario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_envia_comentario"
+        android:layout_alignBottom="@+id/btn_envia_comentario"
+        android:layout_marginStart="13dp"
+        android:layout_toEndOf="@+id/btn_envia_comentario"
+        android:gravity="center"
+        android:text="Button" />
 
 
 </RelativeLayout>

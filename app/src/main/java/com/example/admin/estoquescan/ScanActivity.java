@@ -1,14 +1,20 @@
 package com.example.admin.estoquescan;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -16,14 +22,25 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.estoquescan.Classes.Flags;
 import com.example.admin.estoquescan.Classes.Product;
+import com.example.admin.estoquescan.Classes.User;
+import com.example.admin.estoquescan.Connection.ConnectionNovoComentario;
 import com.example.admin.estoquescan.Connection.ConnectionScan;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.Year;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class ScanActivity extends AppCompatActivity implements OnClickListener {
@@ -48,11 +65,6 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
         FloatingActionButton btnSearch = (FloatingActionButton) findViewById(R.id.btnPesquisa);
         btnSearch.setOnClickListener(this);
 
-//        if(flags.isFirstScan()) {
-//            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-//            scanIntegrator.initiateScan();
-//            flags.setFirstScan(false);
-//        }
     }
 
     public void onClick(View v){
@@ -62,64 +74,10 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
         }else if(v.getId()==R.id.btnAlert){
             show();
         }else if(v.getId()==R.id.btnPesquisa){
-            search();
+       // search();
         }
     }
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.options_menu,menu);
-//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//        SearchView searchView = (SearchView) menu.findItem(R.id.search_bar_produtos);
-//        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-//
-//        searchView.setIconifiedByDefault(false);
-//        return true;
-//    }
 
-
-    public void search(){
-        Dialog bud = new Dialog(this);
-        bud.setContentView(R.layout.search_show);
-
-        ListAdapter adapter;
-        List arrayList = new ArrayList();
-
-        arrayList.add("January");
-        arrayList.add("February");
-        arrayList.add("March");
-        arrayList.add("April");
-        arrayList.add("May");
-        arrayList.add("June");
-        arrayList.add("July");
-        arrayList.add("August");
-        arrayList.add("September");
-        arrayList.add("October");
-        arrayList.add("November");
-        arrayList.add("December");
-
-        
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) findViewById(R.id.search_bar_produtos);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
-            }
-        });
-
-
-        bud.show();
-
-    }
 
     @Override
     public void onBackPressed() {
@@ -136,14 +94,69 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
         }
     }
 
+
+
     public void show(){
-        Dialog builder = new Dialog(this);
-        builder.setContentView(R.layout.scan_show_alert);
-        TextView txt = builder.findViewById(R.id.txt_comentario);
-        txt.setText(subtitulo);
-        EditText edt = builder.findViewById(R.id.edit_comentario);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final EditText input = new EditText(this);
+        builder.setView(input);
+
+        builder.setPositiveButton("enviar", new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(titulo == null) {
+                    titulo = "Comentario Geral";
+                }
+                    String title = titulo;
+                    String coment = String.valueOf(input.getText());
+                    int user_cod = User.getSavedUser().getId();
+                    int idProd = internalcode;
+                    int ativo = 1;
+                    String data = "2017/11/23";//new Date(System.currentTimeMillis());
+                    int loja = 1;
+                    String nome_usuario = User.getSavedUser().getUsername();
+
+                    ConnectionNovoComentario conn = new ConnectionNovoComentario();
+                    JSONObject json = new JSONObject();
+                    try {
+                        json.put("comentario", coment);
+                        json.put("codigo_usuario", user_cod);
+                        json.put("id_produto", idProd);
+                        json.put("ativo", ativo);
+                        json.put("data", data);
+                        json.put("Loja", loja);
+                        json.put("nome_usuario", nome_usuario);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    conn.execute(json);
+                    Toast.makeText(ScanActivity.this, "Comentario: " + input.getText() + "Titulo: " + title, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+
+        if(subtitulo == null){
+            subtitulo = "sem produto!";
+            builder.setMessage("Comentario: "+subtitulo);
+        }else{
+            builder.setMessage("Comentario "+subtitulo);
+        }
         builder.show();
     }
+
+    int internalcode;
+
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
@@ -160,6 +173,7 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
                     txtEstoque.setText(String.valueOf(p.getStock()));
                     titulo = p.getDescription();
                     subtitulo = "PLU " + p.getInternalCode();
+                    internalcode = Integer.parseInt(p.getInternalCode());
                     if (p.isInSale()) {
                         txtPreco.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.precoPromocional));
                     } else {

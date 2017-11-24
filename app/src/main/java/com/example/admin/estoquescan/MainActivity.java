@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        listacomentarios();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,8 +53,6 @@ public class MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
-
-        listacomentarios();
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -183,8 +183,8 @@ public class MainActivity extends AppCompatActivity
             Intent goToScan = new Intent(this,ScanActivity.class);
             startActivity(goToScan);
         } else if (id == R.id.expiration_management) {
-            Intent goToExpiration = new Intent(getApplicationContext(), SearchAddressActivity.class);
-            startActivity(goToExpiration);
+//            Intent goToExpiration = new Intent(getApplicationContext(), SearchAddressActivity.class);
+//            startActivity(goToExpiration);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

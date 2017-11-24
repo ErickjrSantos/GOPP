@@ -8,8 +8,12 @@
         android:id="@+id/txtProgress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignBottom="@+id/progressBar_cyclic"
-        android:layout_below="@+id/progressBar_cyclic"/>
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/progressBar_cyclic"
+        android:layout_marginTop="38dp"
+        android:textAlignment="center"
+        android:hint="TESTES"
+        android:textSize="30dp" />
 
     <ProgressBar
         android:id="@+id/progressBar_cyclic"

@@ -1,8 +1,13 @@
 package com.example.admin.estoquescan.Connection;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.admin.estoquescan.Classes.Comentarios;
+import com.example.admin.estoquescan.MainActivity;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -18,19 +23,17 @@ import java.util.List;
  */
 
 public class ConnectionComentarios extends AsyncTask {
+
+
     @Override
     protected List<Comentarios> doInBackground(Object[] objects) {
 
-        {
-
             StringBuilder response = new StringBuilder();
-
             try {
                 URL obj = new URL("http://192.168.0.221:70/EstoqueScan/comentarios.php");
                 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
                 //envia POST
                 con.setRequestMethod("POST");
-
 
                 //Cria POST
                 con.setDoOutput(true);
@@ -77,10 +80,9 @@ public class ConnectionComentarios extends AsyncTask {
                     coment.setLoja(loja);
 
                     comentArray.add(coment);
+                    publishProgress(coment);
                 }
-
                 return  comentArray;
-
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -88,5 +90,25 @@ public class ConnectionComentarios extends AsyncTask {
             }
         }
 
+    @Override
+    protected void onPostExecute(Object o) {
+        Log.d("onPostExecute","meupai do ceu");
+       System.out.println("depois");
+        super.onPostExecute(o);
     }
+
+    @Override
+    protected void onPreExecute() {
+
+
+        System.out.println("Antes");
+    }
+
+    @Override
+    protected void onProgressUpdate(Object[] values) {
+        System.out.println("NO time");
+        super.onProgressUpdate(values);
+    }
+
+
 }

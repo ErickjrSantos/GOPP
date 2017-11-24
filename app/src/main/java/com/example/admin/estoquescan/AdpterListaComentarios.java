@@ -1,7 +1,6 @@
 package com.example.admin.estoquescan;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -23,8 +22,6 @@ public class AdpterListaComentarios extends BaseAdapter{
         this.comentarios = comentarios;
         this.act = act;
     }
-
-
 
     @Override
     public int getCount() {
@@ -49,13 +46,13 @@ public class AdpterListaComentarios extends BaseAdapter{
                .inflate(R.layout.lista_comentario_personalizado, viewGroup, false);
 
         Comentarios comentario = comentarios.get(position);
-        TextView nome = (TextView)
+        TextView nome =
                 view.findViewById(R.id.lista_comentarios_personalizada_nome);
-        TextView descricao =(TextView)
+        TextView descricao =
                 view.findViewById(R.id.lista_comentarios_personalizada_descricao);
-        TextView comentou = (TextView)
+        TextView comentou =
                 view.findViewById(R.id.lista_comentarios_personalizada_nome_comentou);
-        TextView produto = (TextView)
+        TextView produto =
                 view.findViewById(R.id.lista_comentarios_personalizada_produto);
 
 

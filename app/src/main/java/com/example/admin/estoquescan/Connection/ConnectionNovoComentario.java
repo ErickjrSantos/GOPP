@@ -9,17 +9,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by user on 16/11/17.
+ * Created by user on 23/11/17.
  */
 
-public class ConnectionComentarioAtivo extends AsyncTask {
+public class ConnectionNovoComentario extends AsyncTask {
     @Override
     protected Object doInBackground(Object[] objects) {
+
 
         StringBuilder response = new StringBuilder();
 
         try {
-            URL obj = new URL("http://187.35.128.157:70/EstoqueScan/salvarComentariosForadaLista.php");
+            URL obj = new URL("http://187.35.128.157:70/EstoqueScan/insereComentarios.php");
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             //envia POST
             con.setRequestMethod("POST");

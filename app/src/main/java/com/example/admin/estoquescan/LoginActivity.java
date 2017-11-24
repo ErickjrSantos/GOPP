@@ -1,11 +1,8 @@
 package com.example.admin.estoquescan;
 
-import android.app.ProgressDialog;
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,13 +10,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.admin.estoquescan.Classes.User;
 import com.example.admin.estoquescan.Connection.ConnectionLogin;
-
 import java.util.concurrent.ExecutionException;
 
 public class LoginActivity extends AppCompatActivity {
+
     private EditText mUserName;
     private EditText mUserPassword;
 
@@ -40,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         if(codigo != 0 && !nome.equals("")){
             Intent goHome = new Intent(LoginActivity.this,MainActivity.class);
 
-            ConnectionLogin CL = new ConnectionLogin();
+            ConnectionLogin CL = new ConnectionLogin(this);
             User user = null;
             try {
                 user = CL.execute(codigo).get();
@@ -67,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                ConnectionLogin CL = new ConnectionLogin();
+                ConnectionLogin CL = new ConnectionLogin(LoginActivity.this);
                 String password = mUserPassword.getText().toString();
                 String nome = mUserName.getText().toString();
 
@@ -96,39 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
             }
-
-
         });
-
     }
-    public ProgressDialog dialog;
-
-    public void dialogWaiting(){
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("Espere....");
-        dialog.setCancelable(true);
-        dialog.setIndeterminate(true);
-        dialog.show();
-        new Thread() {
-            @Override
-            public void run() {
-                try{
-                        Thread.sleep(3000);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                dialog.dismiss();
-
-            }
-
-        }.start();
-
-    }
-
-
-
 }

@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.admin.estoquescan.Classes.Comentarios;
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity
 
     public void listacomentarios(){
         try {
-            ConnectionComentarios connect = new ConnectionComentarios();
+            ConnectionComentarios connect = new ConnectionComentarios(MainActivity.this);
             final ArrayList<Comentarios> comentario = (ArrayList<Comentarios>) connect.execute().get();
 
             final ListView comentariosList = (ListView) findViewById(R.id.lista_comentarios);

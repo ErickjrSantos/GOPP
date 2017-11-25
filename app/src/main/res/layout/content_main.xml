@@ -13,8 +13,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/logo"
 
-        tools:layout_editor_absoluteY="2dp"
-        tools:layout_editor_absoluteX="8dp"
         android:contentDescription="@string/descriptorLogo" />
 
     <include layout="@layout/lista_man_comentarios"/>

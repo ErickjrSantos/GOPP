@@ -3,6 +3,7 @@ package com.example.admin.estoquescan;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -81,6 +82,8 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putInt("codigo", user.getId());
                             editor.apply();
                         }
+                        Snackbar.make(view, "Aguarde...SALVANDO PROCESSO!! ", 4000)
+                                .setAction("Action", null).show();
 
                         Intent goHome = new Intent(LoginActivity.this,MainActivity.class);
                         startActivity(goHome);

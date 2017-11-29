@@ -1,7 +1,10 @@
 package com.example.admin.estoquescan;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -12,20 +15,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.example.admin.estoquescan.Classes.Comentarios;
 import com.example.admin.estoquescan.Classes.User;
 import com.example.admin.estoquescan.Connection.ConnectionComentarios;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -34,6 +36,8 @@ import static java.lang.Math.floor;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
+    public ListView comentariosList;
     private static final String GOPP_PREFERENCES = "GOPPPreferences";
 
     @Override
@@ -43,14 +47,14 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        listacomentarios();
+        comentariosList = (ListView) findViewById(R.id.lista_comentarios);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Estamos trabalhando nisso", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -76,7 +80,6 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-            listacomentarios();
         } else {
             finish();
         }
@@ -89,9 +92,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void listacomentarios(){
+
+
         try {
+
             ConnectionComentarios connect = new ConnectionComentarios(MainActivity.this);
-            final ArrayList<Comentarios> comentario = (ArrayList<Comentarios>) connect.execute().get();
+            final Comentarios[] comentario = connect.execute().get();
 
             final ListView comentariosList = (ListView) findViewById(R.id.lista_comentarios);
             AdpterListaComentarios adpter = new AdpterListaComentarios(comentario,this);
@@ -101,12 +107,12 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     Intent goComent = new Intent(MainActivity.this,comentario_Activity.class);
-                    int id = i;
-                    String posicao = comentario.get(id).getComentario();
-                    int id_coment = comentario.get(id).getId_comentarios();
-                    String nome = comentario.get(id).getNome();
-                    String item = comentario.get(id).getNome_produto();
-                    String data = comentario.get(id).getData();
+
+                    String posicao = comentario[i].getComentario();
+                    int id_coment = comentario[i].getId_comentarios();
+                    String nome = comentario[i].getNome();
+                    String item = comentario[i].getNome_produto();
+                    String data = comentario[i].getData();
 
                     goComent.putExtra("posicao",posicao);
                     goComent.putExtra("nome",nome);
@@ -117,14 +123,14 @@ public class MainActivity extends AppCompatActivity
                     startActivity(goComent);
                     onPause();
                 }
+
             });
-            }catch (Exception e){
+
+        }catch (Exception e){
             e.printStackTrace();
         }
 
-
     }
-
 
 
     @Override
@@ -225,4 +231,5 @@ public class MainActivity extends AppCompatActivity
 
         return photo;
     }
+
 }

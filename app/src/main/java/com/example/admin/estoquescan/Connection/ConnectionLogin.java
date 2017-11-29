@@ -1,16 +1,10 @@
 package com.example.admin.estoquescan.Connection;
 
-import android.app.ProgressDialog;
+
 import android.content.Context;
 import android.os.AsyncTask;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.Toast;
-
 import com.example.admin.estoquescan.Classes.User;
-
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
@@ -20,15 +14,7 @@ import java.net.URL;
 
 public class ConnectionLogin extends AsyncTask<Object, Void, User> {
    private Context context;
-   private ProgressDialog dialog;
-   private int value = 10;
 
-
-    @Override
-    protected void onProgressUpdate(Void... value) {
-
-        super.onProgressUpdate(value);
-    }
 
     public ConnectionLogin(Context context){
        this.context = context;
@@ -36,14 +22,11 @@ public class ConnectionLogin extends AsyncTask<Object, Void, User> {
 
     @Override
     protected void onPreExecute() {
-        dialog = ProgressDialog.show(context,"Aguarde","Verificando credenciais...");
-
         super.onPreExecute();
     }
 
     @Override
     protected User doInBackground(Object[] objects) {
-
 
         StringBuilder response = new StringBuilder();
         User usuario = User.getSavedUser();
@@ -100,20 +83,4 @@ public class ConnectionLogin extends AsyncTask<Object, Void, User> {
         return usuario;
     }
 
-    @Override
-    protected void onPostExecute(User user) {
-
-        try {
-            for (int i = 0; i<=value; i++) {
-                dialog.setProgress(value);
-                dialog.setProgress(i);
-                Thread.sleep(100);
-            }
-        } catch (InterruptedException e) {
-            Toast.makeText(context, "Erro...", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
-
-        dialog.dismiss();
-    }
 }

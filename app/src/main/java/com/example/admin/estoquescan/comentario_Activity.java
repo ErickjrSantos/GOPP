@@ -67,7 +67,5 @@ public class comentario_Activity extends AppCompatActivity {
             return nomeComent;
         }
     }
-//    public void DesativaSimOrNao(){
-//        AlertDialog alert =
-//    }
+
 }

@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.example.admin.estoquescan.Classes.Comentarios;
-import java.util.List;
+
 
 
 /**
@@ -15,24 +15,25 @@ import java.util.List;
 
 public class AdpterListaComentarios extends BaseAdapter{
 
-    private final List<Comentarios> comentarios;
+    private final Comentarios[] comentarios;
     private final Activity act;
 
-    public AdpterListaComentarios(List<Comentarios> comentarios, Activity act) {
+
+    public AdpterListaComentarios(Comentarios[] comentarios, Activity act) {
         this.comentarios = comentarios;
         this.act = act;
     }
 
     @Override
     public int getCount() {
-        if(comentarios==null||comentarios.isEmpty()) return 0;
+        if(comentarios==null||comentarios.length<=0) return 0;
 
-        return comentarios.size();
+        return comentarios.length;
     }
 
     @Override
     public Object getItem(int position) {
-        return comentarios.get(position);
+        return comentarios[position];
     }
 
     @Override
@@ -45,7 +46,7 @@ public class AdpterListaComentarios extends BaseAdapter{
        View view = act.getLayoutInflater()
                .inflate(R.layout.lista_comentario_personalizado, viewGroup, false);
 
-        Comentarios comentario = comentarios.get(position);
+        Comentarios comentario = comentarios[position];
         TextView nome =
                 view.findViewById(R.id.lista_comentarios_personalizada_nome);
         TextView descricao =

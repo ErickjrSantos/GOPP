@@ -1,4 +1,5 @@
 package com.example.admin.estoquescan;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.SearchManager;
@@ -9,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -72,7 +74,7 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();
         }else if(v.getId()==R.id.btnAlert){
-            show();
+            show(v);
         }else if(v.getId()==R.id.btnPesquisa){
        // search();
         }
@@ -96,7 +98,7 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
 
 
 
-    public void show(){
+    public void show(final View ve){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final EditText input = new EditText(this);
@@ -114,7 +116,7 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
                     int user_cod = User.getSavedUser().getId();
                     int idProd = internalcode;
                     int ativo = 1;
-                    String data = "2017/11/23";//new Date(System.currentTimeMillis());
+
                     int loja = 1;
                     String nome_usuario = User.getSavedUser().getUsername();
 
@@ -125,7 +127,6 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
                         json.put("codigo_usuario", user_cod);
                         json.put("id_produto", idProd);
                         json.put("ativo", ativo);
-                        json.put("data", data);
                         json.put("Loja", loja);
                         json.put("nome_usuario", nome_usuario);
 
@@ -133,7 +134,9 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
                         e.printStackTrace();
                     }
                     conn.execute(json);
-                    Toast.makeText(ScanActivity.this, "Comentario: " + input.getText() + "Titulo: " + title, Toast.LENGTH_SHORT).show();
+
+                    Snackbar.make(ve, "Aguarde...SALVANDO PROCESSO!! ", 3000)
+                            .setAction("Action", null).show();
 
             }
         });

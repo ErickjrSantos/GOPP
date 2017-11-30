@@ -2,13 +2,14 @@ package com.example.admin.estoquescan.Classes;
 
 import android.media.Image;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
  * Created by user on 14/11/17.
  */
 
-public class Comentarios {
+public class Comentarios implements Serializable {
     private int id_comentarios;
     private String comentario;
     private int usuario;

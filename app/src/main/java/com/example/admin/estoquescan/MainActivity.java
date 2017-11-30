@@ -1,10 +1,8 @@
 package com.example.admin.estoquescan;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
+
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -15,8 +13,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +31,6 @@ import static java.lang.Math.floor;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
 
     public ListView comentariosList;
     private static final String GOPP_PREFERENCES = "GOPPPreferences";
@@ -58,7 +53,6 @@ public class MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -85,6 +79,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
     @Override
     protected void onResume() {
         listacomentarios();
@@ -92,7 +87,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void listacomentarios(){
-
 
         try {
 
@@ -228,7 +222,6 @@ public class MainActivity extends AppCompatActivity
                 photo = getDrawable(R.drawable.blankolivegreen);
                 break;
         }
-
         return photo;
     }
 

@@ -14,6 +14,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,11 +27,13 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.admin.estoquescan.Classes.Comentarios;
 import com.example.admin.estoquescan.Classes.Flags;
 import com.example.admin.estoquescan.Classes.Product;
 import com.example.admin.estoquescan.Classes.User;
 import com.example.admin.estoquescan.Connection.ConnectionNovoComentario;
 import com.example.admin.estoquescan.Connection.ConnectionScan;
+import com.example.admin.estoquescan.Retrofit.RetrofitInicializador;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -44,6 +47,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ScanActivity extends AppCompatActivity implements OnClickListener {
 
@@ -115,25 +122,47 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
                     String coment = String.valueOf(input.getText());
                     int user_cod = User.getSavedUser().getId();
                     int idProd = internalcode;
-                    int ativo = 1;
-
+                    boolean ativo = true;
                     int loja = 1;
                     String nome_usuario = User.getSavedUser().getUsername();
 
-                    ConnectionNovoComentario conn = new ConnectionNovoComentario();
-                    JSONObject json = new JSONObject();
-                    try {
-                        json.put("comentario", coment);
-                        json.put("codigo_usuario", user_cod);
-                        json.put("id_produto", idProd);
-                        json.put("ativo", ativo);
-                        json.put("Loja", loja);
-                        json.put("nome_usuario", nome_usuario);
+                    Comentarios comentario = new Comentarios();
+                    comentario.setNome_produto(title);
+                    comentario.setComentario(coment);
+                    comentario.setLoja(loja);
+                    comentario.setAtivo(ativo);
+                    comentario.setProduto(idProd);
+                    comentario.setUsuario(user_cod);
+                    comentario.setNome(nome_usuario);
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+
+                Call<Void> call = new RetrofitInicializador().getComentarioService().insere(comentario);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        Log.i("teste","teste: foi que foi");
                     }
-                    conn.execute(json);
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.i("teste","teste: erro");
+                    }
+                });
+                   // ConnectionNovoComentario conn = new ConnectionNovoComentario();
+//                    JSONObject json = new JSONObject();
+//                    try {
+//                        json.put("comentario", coment);
+//                        json.put("codigo_usuario", user_cod);
+//                        json.put("id_produto", idProd);
+//                        json.put("ativo", ativo);
+//                        json.put("Loja", loja);
+//                        json.put("nome_usuario", nome_usuario);
+//
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                    conn.execute(json);
+
 
                     Snackbar.make(ve, "Aguarde...SALVANDO PROCESSO!! ", 3000)
                             .setAction("Action", null).show();

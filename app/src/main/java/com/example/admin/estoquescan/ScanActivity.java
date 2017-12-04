@@ -34,6 +34,7 @@ import com.example.admin.estoquescan.Classes.User;
 import com.example.admin.estoquescan.Connection.ConnectionNovoComentario;
 import com.example.admin.estoquescan.Connection.ConnectionScan;
 import com.example.admin.estoquescan.Retrofit.RetrofitInicializador;
+import com.example.admin.estoquescan.TheadDialog.ProgressDialogLoad;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -115,6 +116,10 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+
+                final ProgressDialogLoad load = new ProgressDialogLoad(ScanActivity.this);
+                load.progress_dialog_creation();
+
                 if(titulo == null) {
                     titulo = "Comentario Geral";
                 }
@@ -127,13 +132,13 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
                     String nome_usuario = User.getSavedUser().getUsername();
 
                     Comentarios comentario = new Comentarios();
-                    comentario.setNome_produto(title);
                     comentario.setComentario(coment);
-                    comentario.setLoja(loja);
-                    comentario.setAtivo(ativo);
-                    comentario.setProduto(idProd);
                     comentario.setUsuario(user_cod);
+                    comentario.setProduto(idProd);
+                    comentario.setAtivo(ativo);
+                    comentario.setLoja(loja);
                     comentario.setNome(nome_usuario);
+                    comentario.setNome_produto(title);
 
 
                 Call<Void> call = new RetrofitInicializador().getComentarioService().insere(comentario);
@@ -141,28 +146,15 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         Log.i("teste","teste: foi que foi");
+                        load.progress_dialog_dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
                         Log.i("teste","teste: erro");
+                        load.progress_dialog_dismiss();
                     }
                 });
-                   // ConnectionNovoComentario conn = new ConnectionNovoComentario();
-//                    JSONObject json = new JSONObject();
-//                    try {
-//                        json.put("comentario", coment);
-//                        json.put("codigo_usuario", user_cod);
-//                        json.put("id_produto", idProd);
-//                        json.put("ativo", ativo);
-//                        json.put("Loja", loja);
-//                        json.put("nome_usuario", nome_usuario);
-//
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                    conn.execute(json);
-
 
                     Snackbar.make(ve, "Aguarde...SALVANDO PROCESSO!! ", 3000)
                             .setAction("Action", null).show();

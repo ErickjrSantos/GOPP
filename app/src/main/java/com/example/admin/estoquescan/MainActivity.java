@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity
     public void listacomentarios(){
 
         try {
-
             ConnectionComentarios connect = new ConnectionComentarios(MainActivity.this);
             final Comentarios[] comentario = connect.execute().get();
 

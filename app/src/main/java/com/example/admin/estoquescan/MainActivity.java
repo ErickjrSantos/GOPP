@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                Snackbar.make(view, "Estamos trabalhando nisso", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Estamos trabalhando nisso...", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });

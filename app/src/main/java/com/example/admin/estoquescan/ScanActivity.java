@@ -141,7 +141,7 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
                     comentario.setNome_produto(title);
 
 
-                Call<Void> call = new RetrofitInicializador().getComentarioService().insere(comentario);
+                Call<Void> call = new RetrofitInicializador().setComentarioService().insere(comentario);
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -13,6 +14,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.example.admin.estoquescan.Classes.User;
 import com.example.admin.estoquescan.Connection.ConnectionLogin;
+import com.example.admin.estoquescan.Retrofit.RetrofitInicializador;
+import com.example.admin.estoquescan.TheadDialog.ProgressDialogLoad;
+
 import java.util.concurrent.ExecutionException;
 
 public class LoginActivity extends AppCompatActivity {
@@ -59,15 +63,22 @@ public class LoginActivity extends AppCompatActivity {
         mUserPassword  = (EditText) findViewById(R.id.txtPassword);
         final CheckBox checkRemember = (CheckBox) findViewById(R.id.checkRemember);
 
+        final ProgressDialogLoad load = new ProgressDialogLoad(LoginActivity.this);
+
         Button loginButton = (Button) findViewById(R.id.btnLogin);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                load.progress_dialog_creation();
+
+
+
 
                 ConnectionLogin CL = new ConnectionLogin(LoginActivity.this);
                 String password = mUserPassword.getText().toString();
                 String nome = mUserName.getText().toString();
-
+//                Call<User> call = new RetrofitInicializador().getLoginService().existe(nome,password);
+//                call.
                 try {
 
 
@@ -82,14 +93,13 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putInt("codigo", user.getId());
                             editor.apply();
                         }
-                        Snackbar.make(view, "Aguarde...SALVANDO PROCESSO!! ", 4000)
-                                .setAction("Action", null).show();
 
                         Intent goHome = new Intent(LoginActivity.this,MainActivity.class);
                         startActivity(goHome);
                         finish();
 
                     }else{
+
                         Toast.makeText(LoginActivity.this, "Senha ou Usuario Incorretos", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {

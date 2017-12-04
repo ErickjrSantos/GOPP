@@ -12,7 +12,6 @@ public class ProgressDialogLoad {
 
 
         private ProgressDialog pd;
-
         private static ProgressDialog progressDialog;
 
         Context context;
@@ -27,7 +26,6 @@ public class ProgressDialogLoad {
 
             if ((pd != null) && pd.isShowing())
                 pd.dismiss();
-
             pd = null;
 
 
@@ -36,9 +34,9 @@ public class ProgressDialogLoad {
         public void progress_dialog_creation() {
             try {
                 if (pd == null)
-                    pd = ProgressDialog.show(activity, "", "Loading", true);
+                    pd = ProgressDialog.show(activity, "", "Carregando...", true);
             } catch (Exception e) {
-
+                    e.printStackTrace();
             }
         }
 
@@ -47,7 +45,7 @@ public class ProgressDialogLoad {
                 if (progressDialog == null)
                     progressDialog = ProgressDialog.show(activity, "", title, true);
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
         }
 

@@ -14,6 +14,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -60,6 +61,7 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
     private Flags flags = Flags.getInstance();
     int unidade = 1;
     private String titulo, subtitulo;
+    final ProgressDialogLoad load = new ProgressDialogLoad(ScanActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +86,7 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
         }else if(v.getId()==R.id.btnAlert){
             show(v);
         }else if(v.getId()==R.id.btnPesquisa){
-       // search();
+            search();
         }
     }
 
@@ -104,7 +106,30 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
         }
     }
 
+    public void search(){
+        AlertDialog.Builder telaBusca = new AlertDialog.Builder(this);
+        final EditText inputSearch = new EditText(this);
+        inputSearch.setInputType(InputType.TYPE_CLASS_NUMBER);
+        telaBusca.setView(inputSearch);
+        telaBusca.setPositiveButton("enviar",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                load.progress_dialog_creation();
+                int cod = Integer.parseInt(String.valueOf(inputSearch.getText()));
+                Toast.makeText(ScanActivity.this, "Em processo de desenvolvimento!!!"+cod, Toast.LENGTH_SHORT).show();
+                load.progress_dialog_dismiss();
+            }
+        });
+        telaBusca.setNegativeButton("cancela", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
 
+            }
+        }).show();
+
+
+
+     }
 
     public void show(final View ve){
 
@@ -116,8 +141,6 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
-                final ProgressDialogLoad load = new ProgressDialogLoad(ScanActivity.this);
                 load.progress_dialog_creation();
 
                 if(titulo == null) {

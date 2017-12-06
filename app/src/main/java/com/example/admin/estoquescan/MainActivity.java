@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity
                         .setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                texto = comentariosSetor.getText().toString();
+                                texto = String.valueOf(comentariosSetor.getText().toString());
                                 Toast.makeText(MainActivity.this, "Teste: " + texto, Toast.LENGTH_SHORT).show();
                             }
                         })

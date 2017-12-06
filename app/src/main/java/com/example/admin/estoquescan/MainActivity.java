@@ -1,6 +1,10 @@
 package com.example.admin.estoquescan;
 
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -13,13 +17,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.admin.estoquescan.Classes.Comentarios;
 import com.example.admin.estoquescan.Classes.User;
 import com.example.admin.estoquescan.Connection.ConnectionComentarios;
@@ -33,7 +43,12 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public ListView comentariosList;
+    public EditText comentariosSetor;
+    public RadioButton ra_ti;
     private static final String GOPP_PREFERENCES = "GOPPPreferences";
+    public   String texto;
+    View viewman;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +59,7 @@ public class MainActivity extends AppCompatActivity
 
         comentariosList = (ListView) findViewById(R.id.lista_comentarios);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Snackbar.make(view, "Estamos trabalhando nisso...", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        showCadastro();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -67,6 +74,41 @@ public class MainActivity extends AppCompatActivity
             getSupportActionBar().setTitle("GOPP");
             getSupportActionBar().setSubtitle("Menu Principal");
         }
+    }
+
+
+    private void showCadastro() {
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+
+                dialog.setView(R.layout.app_dialog_main);
+
+
+                ra_ti = (RadioButton)findViewById(R.id.ra_ti);
+                comentariosSetor = (EditText) findViewById(R.id.comentario_setor);
+
+                dialog.setTitle("Envie uma notificaçao!!!... ")
+                        .setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                texto = comentariosSetor.getText().toString();
+                                Toast.makeText(MainActivity.this, "Teste: " + texto, Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .show();
+
+                }
+        });
     }
 
     @Override

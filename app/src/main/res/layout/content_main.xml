@@ -11,10 +11,8 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/logo"
-
         android:contentDescription="@string/descriptorLogo" />
 
-    <include layout="@layout/lista_man_comentarios"/>
+    <include layout="@layout/lista_man_comentarios" />
 
 </android.support.constraint.ConstraintLayout>

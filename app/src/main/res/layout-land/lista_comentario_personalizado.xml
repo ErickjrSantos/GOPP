@@ -14,13 +14,13 @@
         android:src="@drawable/blanklightgreen" />
 
     <LinearLayout
-        android:layout_width="192dp"
+        android:layout_width="406dp"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/lista_comentarios_personalizada_nome"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="28dp"
             android:text="Titulosadfjhaksdhflasdhjflashdfsadlfjkaksdfjasçlkdjfasfdashdfjkashdfklahsdfjkahsdklfhasdfhasdjhf"
             android:textSize="20dp" />
@@ -28,22 +28,22 @@
 
         <TextView
             android:id="@+id/lista_comentarios_personalizada_nome_comentou"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
             android:text="Erick"
             android:textSize="15dp" />
 
         <TextView
             android:id="@+id/lista_comentarios_personalizada_produto"
-            android:layout_width="212dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
             android:text="produtojhgjkghjfgdtuyyijoiuoiyuuigugjfdtrsrsfgddhkghhojçhkjhghjdhfgdgf"
             android:textSize="10dp" />
 
     </LinearLayout>
 
     <GridLayout
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <GridLayout>
@@ -52,7 +52,7 @@
 
         <TextView
             android:id="@+id/lista_comentarios_personalizada_descricao"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:text="descriçao"

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        >
+
+<GridLayout
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+    <RadioButton
+        android:id="@+id/ra_ti"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="T.I."
+         />
+
+    <RadioButton
+        android:id="@+id/ra_mkt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="MKT"
+         />
+
+    <RadioButton
+        android:id="@+id/ra_comercial"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Comercial"
+        />
+    </LinearLayout>
+</GridLayout>
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+    <RadioButton
+        android:id="@+id/ra_recebimento"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="recebimento"
+    />
+
+    <RadioButton
+        android:id="@+id/ra_padaria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="padaria"
+         />
+
+    <RadioButton
+        android:id="@+id/ra_hortfrut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hortifrut"
+       />
+        </LinearLayout>
+</GridLayout>
+    </LinearLayout>
+    <EditText
+        android:id="@+id/comentario_setor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        />
+</LinearLayout>

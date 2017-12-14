@@ -20,7 +20,6 @@ import java.util.Locale;
 
 public class ConnectionComentarios extends AsyncTask<Comentarios, Void, Comentarios[]> {
 
-
     Context context;
 
     public ConnectionComentarios(Context context){
@@ -71,16 +70,12 @@ public class ConnectionComentarios extends AsyncTask<Comentarios, Void, Comentar
                 coment.setLoja(loja);
 
                 comentArray[i] = coment;
-
             }
             return  comentArray;
-
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
-
         }
-
     }
 
     @Override

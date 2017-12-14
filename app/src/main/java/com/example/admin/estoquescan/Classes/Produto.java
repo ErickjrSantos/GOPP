@@ -1,12 +1,13 @@
 package com.example.admin.estoquescan.Classes;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by user on 08/11/17.
  */
 
-public class Produto {
+public class Produto implements Serializable{
     private int id_produto;
     private String data_validade;
     private String codBarra;

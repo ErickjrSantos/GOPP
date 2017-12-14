@@ -47,6 +47,7 @@
     <string name="textoEstoque">ESTOQUE</string>
     <string name="textoPerguntaLojaEstoque">Loja ou Estoque ?</string>
     <string name="cancelar">CANCELAR</string>
+    <string name="action_search">busca</string>
 
     <!--            SearchAddressActivity         -->
 

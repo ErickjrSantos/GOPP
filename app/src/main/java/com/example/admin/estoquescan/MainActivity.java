@@ -1,9 +1,7 @@
 package com.example.admin.estoquescan;
 
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -11,14 +9,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,14 +24,12 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.admin.estoquescan.Classes.Comentarios;
 import com.example.admin.estoquescan.Classes.User;
 import com.example.admin.estoquescan.Connection.ConnectionComentarios;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-
 import static java.lang.Math.floor;
 
 public class MainActivity extends AppCompatActivity
@@ -47,7 +40,6 @@ public class MainActivity extends AppCompatActivity
     public RadioButton ra_ti;
     private static final String GOPP_PREFERENCES = "GOPPPreferences";
     public   String texto;
-    View viewman;
 
 
     @Override
@@ -124,12 +116,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onResume() {
-        listacomentarios();
+        //listacomentarios();
         super.onResume();
     }
 
     public void listacomentarios(){
-
         try {
             ConnectionComentarios connect = new ConnectionComentarios(MainActivity.this);
             final Comentarios[] comentario = connect.execute().get();
@@ -237,7 +228,6 @@ public class MainActivity extends AppCompatActivity
             Intent goToCadastro = new Intent(getApplicationContext(),AddressRegisterActivity.class);
             startActivity(goToCadastro);
             onPause();
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

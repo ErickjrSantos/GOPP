@@ -89,7 +89,6 @@ public class LoginActivity extends AppCompatActivity {
 //                });
                 try {
 
-
                     User user = CL.execute(nome,password).get();
                     User.setSavedUser(user);
 

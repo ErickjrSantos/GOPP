@@ -3,6 +3,7 @@ package com.example.admin.estoquescan.Retrofit;
 
 import com.example.admin.estoquescan.Service.ComentariosService;
 import com.example.admin.estoquescan.Service.LoginService;
+import com.example.admin.estoquescan.Service.ProdutosService;
 
 
 import java.util.concurrent.TimeUnit;
@@ -42,6 +43,9 @@ public class RetrofitInicializador {
     }
     public LoginService getLoginService(){
         return retrofit.create(LoginService.class);
+    }
+    public ProdutosService getProdutosService(){
+        return retrofit.create(ProdutosService.class);
     }
 
 }

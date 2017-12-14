@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.example.admin.estoquescan.Classes.Comentarios;
 import com.example.admin.estoquescan.Classes.Flags;
 import com.example.admin.estoquescan.Classes.Product;
+import com.example.admin.estoquescan.Classes.Produto;
 import com.example.admin.estoquescan.Classes.User;
 import com.example.admin.estoquescan.Connection.ConnectionNovoComentario;
 import com.example.admin.estoquescan.Connection.ConnectionScan;
@@ -70,6 +71,8 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
         txtPreco = (TextView) findViewById(R.id.textPreco);
         txtEstoque = (TextView) findViewById(R.id.textEstoque);
 
+        handleIntent(getIntent());
+
         FloatingActionButton btn = (FloatingActionButton) findViewById(R.id.btnAlert);
         btn.setOnClickListener(this);
         FloatingActionButton btnScan = (FloatingActionButton) findViewById(R.id.btnScan);
@@ -78,6 +81,53 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
         btnSearch.setOnClickListener(this);
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id== R.id.search){
+            onSearchRequested();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        handleIntent(intent);
+        super.onNewIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        if(Intent.ACTION_SEARCH.equals(intent.getAction())){
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            showResults(query);
+        }
+    }
+
+    private void showResults(String query) {
+        query = "teste";
+    }
+
+    @Override
+    public boolean onSearchRequested() {
+        Bundle appData = new Bundle();
+        appData.putString("hello","word");
+        startSearch(null,false,appData,false);
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.comentarios,menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        return true;
+    }
+
 
     public void onClick(View v){
         if( v.getId() == R.id.btnScan ){
@@ -106,28 +156,31 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
         }
     }
 
+
+
     public void search(){
         AlertDialog.Builder telaBusca = new AlertDialog.Builder(this);
         final EditText inputSearch = new EditText(this);
-        inputSearch.setInputType(InputType.TYPE_CLASS_NUMBER);
+        //inputSearch.setInputType(InputType.TYPE_CLASS_NUMBER);
         telaBusca.setView(inputSearch);
-        telaBusca.setPositiveButton("enviar",new DialogInterface.OnClickListener() {
+        telaBusca.setPositiveButton("Buscar",new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 load.progress_dialog_creation();
                 int cod = Integer.parseInt(String.valueOf(inputSearch.getText()));
-                Toast.makeText(ScanActivity.this, "Em processo de desenvolvimento!!!"+cod, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ScanActivity.this, "teste"+ cod, Toast.LENGTH_SHORT).show();
+
+                Call<String> prod = new RetrofitInicializador().getProdutosService().busca(cod);
+
                 load.progress_dialog_dismiss();
             }
         });
-        telaBusca.setNegativeButton("cancela", new DialogInterface.OnClickListener() {
+        telaBusca.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
             }
         }).show();
-
-
 
      }
 
@@ -178,10 +231,6 @@ public class ScanActivity extends AppCompatActivity implements OnClickListener {
                         load.progress_dialog_dismiss();
                     }
                 });
-
-                    Snackbar.make(ve, "Aguarde...SALVANDO PROCESSO!! ", 3000)
-                            .setAction("Action", null).show();
-
             }
         });
 

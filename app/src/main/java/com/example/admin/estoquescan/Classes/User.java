@@ -11,6 +11,7 @@ import android.util.Base64;
 public class User {
     private String username, image;
     private int id;
+    private int cargo;
     private static User savedUser = null;
 
     public static User getSavedUser(){
@@ -38,6 +39,10 @@ public class User {
         Bitmap decodeByte = BitmapFactory.decodeByteArray(decodeString,0,decodeString.length);
         return new BitmapDrawable(context.getResources(), decodeByte);
     }
+
+    public int getCargo() {return cargo;}
+
+    public void setCargo(int cargo) {this.cargo = cargo;}
 
     public String getUsername() {return username;}
 
